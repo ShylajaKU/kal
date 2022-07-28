@@ -8,9 +8,11 @@ class Welcome extends CI_Controller {
 		$this->load->view('welcome_message');
 	}
 // ------------------------------------------
-	public function index()
-	{
-		$this->load->view('welcome_message');
+	public function landing(){
+		$this->load->view('templates/head/header');
+		$this->load->view('landing/landing');
+		$this->load->view('templates/foot/footer');
+
 	}
 // ------------------------------------------
 // ------------------------------------------
