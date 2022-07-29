@@ -41,16 +41,17 @@ public function check_email_exists_fm($email){
 
     $query = $this->db->get_where('users',array('email' => $email)) ;
     if(empty($query->row_array())){
-        return true;
-        // if array is empty it will retuun true back to controller
-    }else{
         return false;
+        // if array is empty it will return false back to controller
+    }else{
+        return true;
     }
     //return to user_controller/check_email_exists_fc (2nd)
 }
 // ---------------------------------------
 public function set_userdata_from_db($user_id){
-		$select_array = array('email','email_verified','phone_no','phone_no_verified','name','gender','marital_status','level_1','level_2');
+        $this->db->where('user_id',$user_id);
+		$select_array = array('user_id','email','email_verified','phone_no','phone_no_verified','name','gender','marital_status','level_1','level_2');
 		$this->db->select($select_array);
 		$query = $this->db->get('users');
 		$result = $query->result_array();

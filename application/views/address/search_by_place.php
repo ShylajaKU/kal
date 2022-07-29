@@ -13,6 +13,7 @@
 
 
   <div class="container cont">
+    <h4>Enter Your Address</h4>
     <?= form_open('state-entered',array('id'=>'form-1',))?>
 
       <select class="form-control me-2" name="state_id" required
@@ -78,10 +79,9 @@
       });
   });
 
-function fn(){
+    function fn(){
     setTimeout = 100;
-    document.getElementById("form-1").submit();
-  }
+    document.getElementById("form-1").submit();}
     function fn_two(){
     setTimeout = 100;
     document.getElementById("form-2").submit();} 

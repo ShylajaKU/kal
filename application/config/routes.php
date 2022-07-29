@@ -55,21 +55,30 @@ $route['register'] = 'welcome/register_1st_page';
 $route['login'] = 'welcome/login_fc';
 $route['logout'] = 'welcome/logout_fc';
 $route['home'] = 'welcome/home_fc';
-$route['add-address/(:num)'] = 'welcome/add_address_fc/$1';
-$route['enter-pincode'] = 'welcome/enter_pincode_fc';
+// $route['add-address/(:num)'] = 'welcome/add_address_fc/$1';
+// $route['enter-pincode'] = 'welcome/enter_pincode_fc';
 
 // address
 $route['search-by-place'] = 'address_controller/search_by_place_fc';
 $route['state-entered'] = 'address_controller/state_entered';
-$route['(:any)'] = 'address_controller/state_in_url_fc'; 
+$route['(:any)/state-entered'] = 'address_controller/state_in_url_fc'; 
 
 $route['(:any)/district-entered'] = 'address_controller/district_entered';
-$route['(:any)/(:any)'] = 'address_controller/district_in_url_fc';
+$route['(:any)/(:any)/district-entered'] = 'address_controller/district_in_url_fc';
 
 $route['(:any)/(:any)/po_entered'] = 'address_controller/po_entered';
-$route['(:any)/(:any)/(:any)'] = 'address_controller/po_in_url_fc';
+$route['(:any)/(:any)/(:any)/po_entered'] = 'address_controller/po_in_url_fc';
 
 // address
 
+$route['community-details'] = 'welcome/community_details_fc';
+$route['caste-selected'] = 'welcome/caste_selected';
+
+
+
+
+
+
+$route['test'] = 'admin_controller/test_fc';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

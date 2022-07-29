@@ -33,7 +33,7 @@ public function state_entered(){
     $known_value_col_name = 'state_id';    
     $op_value_col_name = 'statename_slug';    
     $statename_slug = $this->address_model->get_single_value_fm($table_name,$known_value,$known_value_col_name,$op_value_col_name);
-        redirect($statename_slug);
+        redirect($statename_slug.'/state-entered');
     
     }
 // ------------------------------------------
@@ -79,7 +79,7 @@ public function district_entered(){
     $known_value_col_name = $table_name = 'district_id';
     $op_value_col_name = 'Districtname_slug';
     $Districtname_slug = $this->address_model->get_single_value_fm($table_name,$known_value,$known_value_col_name,$op_value_col_name);
-    redirect($uri1.'/'.$Districtname_slug);
+    redirect($uri1.'/'.$Districtname_slug.'/district-entered');
 }
 // ------------------------------------------
 public function district_in_url_fc(){
@@ -146,7 +146,7 @@ public function po_entered(){
     $op_value_col_name = 'officename_only_slug';
     $officename_only_slug = $this->address_model->get_single_value_fm($table_name,$known_value,$known_value_col_name,$op_value_col_name);
 
-    redirect($uri1.'/'.$uri2.'/'.$officename_only_slug);
+    redirect($uri1.'/'.$uri2.'/'.$officename_only_slug.'/po_entered');
 }
 // ------------------------------------------
 public function po_in_url_fc(){
@@ -219,9 +219,9 @@ $known_value = $po_sl_no;
 $known_value_col_name = 'sl_no';
 
 $pincode_row = $this->address_model->get_row_fm($table_name,$known_value,$known_value_col_name);
-var_dump($pincode_row);
 $data['table_rows'] = $pincode_row;
 $data['valid_pincode'] = true;
+
 
 $sl_no_array = array(); 
 foreach($pincode_row as $r){
@@ -229,15 +229,41 @@ foreach($pincode_row as $r){
     $sl_no_array[] = $sl_no;
 }
 
-// $this->load->view('home/header');
-// $this->load->view('home/search_by_place',$data);
-// // $table_rows  $valid_pincode for search result page
-// $this->load->view('search_result/search_result');
-// $this->load->view('home/content');
-// $this->load->view('home/footer');
-
+$data['po_list'] = $pincode_row;
+// var_dump($pincode_row);
+// echo $sl_no_pincode = $pincode_row[0]['sl_no'];
+$this->form_validation->set_rules('address_line_1','Address Line 1','required');
+if(!$this->form_validation->run()){
+$this->load->view('templates/head/header');
+$this->load->view('register/add_address',$data);
+$this->load->view('templates/foot/footer');
+}else{
+    $data = array(
+        'house_name' => $this->input->post('house_name'),
+        'address_line_1' => $this->input->post('address_line_1'),
+        'landmark' => $this->input->post('landmark'),
+        'pincode' => $this->input->post('pincode'),
+        'pincode' => $this->input->post('pincode'),
+        'po_name' => $this->input->post('po_name'),
+        'city' => $this->input->post('city'),
+        'taluk' => $this->input->post('taluk'),
+        'district' => $this->input->post('district'),
+        'state' => $this->input->post('state'),
+        'country' => $this->input->post('country'),
+        'sl_no_all_india_po_list' => $pincode_row[0]['sl_no'],
+        'level_2' => '1',
+    );
+    // var_dump($data);
+    var_dump($this->session->userdata());
+    $unique_id = $user_id = $this->session->userdata('user_id');
+    $unique_id_col_name = 'user_id';
+    $table_name = 'users';
+    $this->update_model->update_fm($unique_id,$unique_id_col_name,$table_name,$data);
+    $this->get_model->set_userdata_from_db($user_id);
+}
 }
 // ------------------------------------------
+
 // ------------------------------------------
 // ------------------------------------------
 

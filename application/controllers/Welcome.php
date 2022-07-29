@@ -119,6 +119,7 @@ public function check_email_exists_fc($email){
 }
 // ------------------------------------------
 public function login_fc(){
+	// $this->session->sess_destroy();
     $this->form_validation->set_rules('email','Email','required|callback_check_email_registered_fc');
 	$this->form_validation->set_message('check_email_registered_fc', 'This email is not registered');
     $this->form_validation->set_rules('password','Password','required');
@@ -129,9 +130,9 @@ public function login_fc(){
 		$this->load->view('templates/foot/footer');
 	
 	}else{
-$email = $this->input->post('email');
-$password = $this->input->post('password');
-$user_id = $this->get_model->check_password_and_return_user_id_fm($email , $password);
+		$email = $this->input->post('email');
+		$password = $this->input->post('password');
+		$user_id = $this->get_model->check_password_and_return_user_id_fm($email , $password);
 		$this->get_model->set_userdata_from_db($user_id);
 		$this->session->set_userdata('logged_in','1');
 // var_dump($this->session->userdata());
@@ -142,11 +143,11 @@ $user_id = $this->get_model->check_password_and_return_user_id_fm($email , $pass
 public function check_email_registered_fc($email){
 
     if($this->get_model->check_email_exists_fm($email)){
-        // returned true from model if email exists
-        return false;
+        // returned false from model if email dosent exists
+        return true;
         // this will return (false) changed from true to set_rules on top
     }else{
-        return true;
+        return false;
     }
 }
 // ------------------------------------------
@@ -157,8 +158,9 @@ public function logout_fc(){
 }
 // ------------------------------------------
 public function home_fc(){
+	var_dump($this->session->userdata());
 	if($this->session->userdata('logged_in') != '1'){redirect('login');}
-	if($this->session->userdata('level_2') != '1'){redirect('enter-pincode');}
+	if($this->session->userdata('level_2') != '1'){redirect('search-by-place');}
 
 	$this->load->view('templates/head/header');
 	$this->load->view('home/home');
@@ -255,7 +257,23 @@ public function does_pincode_exists_fc(){
 	}
 }
 // ------------------------------------------
+public function community_details_fc(){
+	$query = $this->db->get('caste_id');
+	$result = $query->result_array();
+	$data['caste_id_table'] = $result;
+	$this->load->view('templates/head/header');
+    $this->load->view('register/community_details',$data);
+    $this->load->view('templates/foot/footer');
+}
 // ------------------------------------------
+public function caste_selected(){
+	echo $relegion = $this->input->post('relegion');
+	$this->session->set_userdata('temp_rel',$relegion);
+	echo $caste = $this->input->post('caste');
+	$this->session->set_userdata('temp_cas',$caste);
+
+var_dump($this->session->userdata());
+}
 // ------------------------------------------
 // ------------------------------------------
 

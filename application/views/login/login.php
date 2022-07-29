@@ -17,7 +17,7 @@
         <input class="form-control" type="password" name="password" id="pass" placeholder="Password">
     <br>
     <button type="submit" class="btn btn-primary vip-center">Login</button>
-    <a style="margin-left:15px ;" href="http://">Register Here</a>
+    <a style="margin-left:15px ;" href="<?= base_url('register')?>">Register Here</a>
     <br>
     <?php echo validation_errors(); ?>
 
