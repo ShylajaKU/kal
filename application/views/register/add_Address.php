@@ -15,18 +15,64 @@
       <input class="form-control" type="text" name="landmark" id="lm">
 
       <label class="form-label" for="pc">Pincode *</label>
-      <input class="form-control" type="text" name="pincode" id="pc" required>
+      <input class="form-control" type="text" name="pincode" id="pc" required value="<?= $pincode ?>">
 <span style="color: red;"><?= form_error('pincode'); ?></span>
 
+      <label class="form-label" for="poname">Post Office Name *</label>
+      <select class="form-control" name="po_name" id="poname" required>
+      <?php $arr = array();
+            foreach($po_list as $po){ 
+            if (!in_array($po['officename_only'], $arr)){
+            array_push($arr,$po['officename_only']);}} ?>
+            <?php foreach($arr as $a){ ?>
+                  <option value="<?= ucwords(strtolower($a))?>"><?= ucwords(strtolower($a))?></option>
+            <?php } ?>
+      </select>
 
       <label class="form-label" for="city">City *</label>
-      <input class="form-control" type="text" name="city" id="city" required>
+      <select class="form-control" name="city" id="city" required>
+      <?php $arr = array();
+            foreach($po_list as $po){ 
+            if (!in_array($po['divisionname'], $arr)){
+            array_push($arr,$po['divisionname']);}} ?>
+            <?php foreach($arr as $a){ ?>
+                  <option value="<?= ucwords(strtolower($a))?>"><?= ucwords(strtolower($a))?></option>
+            <?php } ?>
+      </select>
+
+      <label class="form-label" for="taluk">Taluk *</label>
+      <select class="form-control" name="taluk" id="taluk" required>
+      <?php $arr = array();
+            foreach($po_list as $po){ 
+            if (!in_array($po['Taluk'], $arr)){
+            array_push($arr,$po['Taluk']);}} ?>
+            <?php foreach($arr as $a){ ?>
+                  <option value="<?= ucwords(strtolower($a))?>"><?= ucwords(strtolower($a))?></option>
+            <?php } ?>
+      </select>
 
       <label class="form-label" for="dt">District *</label>
-      <input type="text" class="form-control" id="dt" name="district" required>
+      <select class="form-control" id="dt" name="district" required>
+      <?php $arr = array();
+            foreach($po_list as $po){ 
+            if (!in_array($po['Districtname'], $arr)){
+            array_push($arr,$po['Districtname']);}} ?>
+            <?php foreach($arr as $a){ ?>
+                  <option value="<?= ucwords(strtolower($a))?>"><?= ucwords(strtolower($a))?></option>
+            <?php } ?>
+      </select>
 
       <label class="form-label" for="st">State *</label>
-      <input type="text" class="form-control" id="st" name="state" required>
+      <select class="form-control" id="st" name="state" required>
+      <?php $arr = array();
+            foreach($po_list as $po){ 
+            if (!in_array($po['statename'], $arr)){
+            array_push($arr,$po['statename']);}} ?>
+            <?php foreach($arr as $a){ ?>
+                  <option value="<?= ucwords(strtolower($a))?>"><?= ucwords(strtolower($a))?></option>
+            <?php } ?>
+      </select>
+            
 
       <label class="form-label" for="ct">Country *</label>
       <input type="text" class="form-control" id="ct" name="country" value="India" readonly required>

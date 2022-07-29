@@ -58,5 +58,18 @@ $route['home'] = 'welcome/home_fc';
 $route['add-address/(:num)'] = 'welcome/add_address_fc/$1';
 $route['enter-pincode'] = 'welcome/enter_pincode_fc';
 
+// address
+$route['search-by-place'] = 'address_controller/search_by_place_fc';
+$route['state-entered'] = 'address_controller/state_entered';
+$route['(:any)'] = 'address_controller/state_in_url_fc'; 
+
+$route['(:any)/district-entered'] = 'address_controller/district_entered';
+$route['(:any)/(:any)'] = 'address_controller/district_in_url_fc';
+
+$route['(:any)/(:any)/po_entered'] = 'address_controller/po_entered';
+$route['(:any)/(:any)/(:any)'] = 'address_controller/po_in_url_fc';
+
+// address
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

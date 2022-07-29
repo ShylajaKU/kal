@@ -203,10 +203,13 @@ public function add_address_fc($pincode){
 	$this->form_validation->set_rules('address_line_1','Address Line 1','required');
 	if(!$this->form_validation->run()){
 		$this->db->where('pincode',$pincode);
-		$select_array = array('officename_only','pincode','Taluk','Districtname','statename');
+		$select_array = array('officename_only','pincode','divisionname','Taluk','Districtname','statename');
+		$this->db->select($select_array);
 		$this->db->from('all_india_po_list');
-		$data['po_list'] = $po_list = $this->db->get()->result_array();
-		
+		$query = $this->db->get();
+		$data['po_list'] = $po_list = $query->result_array();
+		$data['num_rows'] = $query->num_rows();
+		$data['pincode'] = $pincode;
 		$this->load->view('templates/head/header');
 		$this->load->view('register/add_address',$data);
 		$this->load->view('templates/foot/footer');
