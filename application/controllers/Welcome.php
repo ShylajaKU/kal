@@ -10,6 +10,8 @@ class Welcome extends CI_Controller {
 // ------------------------------------------
 	public function landing(){
 		$this->load->view('templates/head/header');
+		$this->load->view('templates/login_header/login_header');
+		
 		$this->load->view('landing/landing');
 		$this->load->view('templates/foot/footer');
 
