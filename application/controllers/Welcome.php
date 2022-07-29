@@ -17,6 +17,14 @@ class Welcome extends CI_Controller {
 
 	}
 // ------------------------------------------
+	public function register_1st_page(){
+		$table_name = 'marital_status';
+		$data['marital_status'] = $this->get_model->get_all_fm($table_name);
+		$this->load->view('templates/head/header');
+		$this->load->view('register/register_1st_page',$data);
+		$this->load->view('templates/foot/footer');
+
+	}
 // ------------------------------------------
 // ------------------------------------------
 // ------------------------------------------
