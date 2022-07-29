@@ -10,6 +10,13 @@ public function get_all_fm($table_name){
 }
 
 // ---------------------------------------
+public function get_rows_with_a_common_value_fm($known_value,$col_name_of_known_value,$table_name){
+$this->db->where($col_name_of_known_value , $known_value);
+$query = $this->db->get($table_name);
+return $result = $query->result_array;
+}
+
+// ---------------------------------------
 // Function to get the client IP address
 public function get_client_ip() {
     $ipaddress = '';
@@ -75,7 +82,18 @@ public function get_any_field_fm($table_name,$known_value,$col_name_of_known_val
     return $op_value;
 }
 // ---------------------------------------
+public function check_a_value_present_fm($value,$value_col_name,$table_name){
+    $this->db->where($value_col_name,$value);
+    $query = $this->db->get($table_name);
+    $num_rows = $query->num_rows();
+    if(!$num_rows){
+        return false;
+    }else{
+        return true;
+    }
+}
 // ---------------------------------------
+
 // ---------------------------------------
 // ---------------------------------------
 // ---------------------------------------

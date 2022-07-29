@@ -158,6 +158,8 @@ public function logout_fc(){
 // ------------------------------------------
 public function home_fc(){
 	if($this->session->userdata('logged_in') != '1'){redirect('login');}
+	if($this->session->userdata('level_2') != '1'){redirect('enter-pincode');}
+
 	$this->load->view('templates/head/header');
 	$this->load->view('home/home');
 
@@ -167,6 +169,88 @@ public function home_fc(){
 
 // ------------------------------------------
 // ------------------------------------------
+// ------------------------------------------
+public function enter_pincode_fc(){
+	if($this->session->userdata('logged_in') != '1'){redirect('login');}
+	if($this->session->userdata('level_2') != '0'){redirect('home');}
+
+	$this->form_validation->set_rules('pincode','Pincode','required|callback_does_pincode_exists_fc');
+	if(!$this->form_validation->run()){
+
+	$this->load->view('templates/head/header');
+	$this->load->view('register/enter_pincode');
+	$this->load->view('templates/foot/footer');
+	}else{
+		$pincode = $this->input->post('pincode');
+		$value = $this->input->post('pincode');
+	$value_col_name = 'pincode';
+	$table_name = 'pincode_list';
+
+	$present = $this->get_model->check_a_value_present_fm($value,$value_col_name,$table_name);
+	if(!$present){
+		$this->form_validation->set_message('does_pincode_exists_fc','Enter a valid pincode');
+		return false;
+	}else{
+		// return true;
+		redirect('add-address/'.$pincode);
+	}
+	}
+}
+// ------------------------------------------
+public function add_address_fc($pincode){
+	if($this->session->userdata('logged_in') != '1'){redirect('login');}
+
+	$this->form_validation->set_rules('address_line_1','Address Line 1','required');
+	if(!$this->form_validation->run()){
+		$this->db->where('pincode',$pincode);
+		$select_array = array('officename_only','pincode','Taluk','Districtname','statename');
+		$this->db->from('all_india_po_list');
+		$data['po_list'] = $po_list = $this->db->get()->result_array();
+		
+		$this->load->view('templates/head/header');
+		$this->load->view('register/add_address',$data);
+		$this->load->view('templates/foot/footer');
+var_dump($po_list);
+
+	}else{
+		$address_line_1 = $this->input->post('address_line_1');
+		$landmark = $this->input->post('landmark');
+		$pincode = $this->input->post('pincode');
+		$city = $this->input->post('city');
+		$district = $this->input->post('district');
+		$state = $this->input->post('state');
+		$country = $this->input->post('country');
+
+			$data = array(
+				'address_line_1' => $address_line_1, 
+				'landmark' => $landmark,
+				'pincode' => $pincode, 
+				'city' => $city, 
+				'district' => $district, 
+				'state' => $state, 
+				'country' => $country, 
+				'level_2' => '1',
+			);
+		$unique_id = $this->session->userdata('user_id');
+		$unique_id_col_name = 'user_id';
+		$table_name = 'users';
+		$this->update_model->update_fm($unique_id,$unique_id_col_name,$table_name,$data);
+	}
+}
+// ------------------------------------------
+public function does_pincode_exists_fc(){
+	$value = $this->input->post('pincode');
+	$value_col_name = 'pincode';
+	$table_name = 'pincode_list';
+
+	$present = $this->get_model->check_a_value_present_fm($value,$value_col_name,$table_name);
+	if(!$present){
+		$this->form_validation->set_message('does_pincode_exists_fc','Enter a valid pincode');
+		return false;
+	}else{
+		return true;
+	}
+}
 // ------------------------------------------
 // ------------------------------------------
 // ------------------------------------------

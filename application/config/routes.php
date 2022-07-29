@@ -55,6 +55,8 @@ $route['register'] = 'welcome/register_1st_page';
 $route['login'] = 'welcome/login_fc';
 $route['logout'] = 'welcome/logout_fc';
 $route['home'] = 'welcome/home_fc';
+$route['add-address/(:num)'] = 'welcome/add_address_fc/$1';
+$route['enter-pincode'] = 'welcome/enter_pincode_fc';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
