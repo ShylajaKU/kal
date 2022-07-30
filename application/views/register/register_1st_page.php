@@ -31,8 +31,8 @@
         }
     </style>
 <div class="vip-container container" >
-
-    <h3>Register for free at k4kalyanam.in <span class="sp"> Step 1</span></h3>
+    <h3>Register for free with Us <span class="sp"> Step 1</span></h3>
+    <br>
 <?= form_open() ?>
     <!-- ------------------------------------- -->
     <label for="" class="form-label">Profile created by *</label><br>
@@ -179,7 +179,7 @@
     <br>
     <?= form_close() ?>
 </div>
-
+<br>
 
 <script>
       $(document).ready(function () {
