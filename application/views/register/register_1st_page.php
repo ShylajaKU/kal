@@ -3,6 +3,7 @@
         width: 80vw;
         margin: auto;
     }
+
     .bg-col-1{
             background-color: #03fcf4;
         }
@@ -22,10 +23,16 @@
 <script src="<?= base_url('assets/js/selectize.min.js')?>"></script>
 
 <br>
-<div class="asd" >
-    <div>
-        <h3> Register for free at k4kalyanam.in</h3><br>
-    </div>
+<style>
+        .sp{
+            font-size: 1.2rem;
+            padding-left: 10%;
+            color: blue;
+        }
+    </style>
+<div class="vip-container container" >
+
+    <h3>Register for free at k4kalyanam.in <span class="sp"> Step 1</span></h3>
 <?= form_open() ?>
     <!-- ------------------------------------- -->
     <label for="" class="form-label">Profile created by *</label><br>

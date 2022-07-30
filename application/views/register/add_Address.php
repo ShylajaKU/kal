@@ -3,7 +3,15 @@
 <br>
 
 <div class="container vip-container">
-    <h3>Enter your Home Address</h3>
+    <style>
+        .sp{
+            font-size: 1.2rem;
+            padding-left: 10%;
+            color: blue;
+        }
+    </style>
+    <h3>Enter your Home Address <span class="sp"> Step 2</span></h3>
+    <br>
     <?= form_open()?>
       <!-- <input class="form-control" type="search" name="pincode" placeholder="Enter your Pincode" aria-label="Pincode" required>
       <button class="btn btn-primary" type="submit">Next</button> -->

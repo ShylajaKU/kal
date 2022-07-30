@@ -1,4 +1,8 @@
 <?php
+
+// get state id from state_id table and save in caste list
+
+
 // $query = $this->db->get('state_id');
 // $result = $query->result_array();
 // // var_dump($result);
@@ -12,12 +16,16 @@
 //     );
 //     $this->db->update('caste_list',$data);
 // }
-
+// correct
 // ------------------------------------
 
+// get unique castes and save to caste_id 
+// update new caste id into caste list
+
+// $this->db->where('caste_in_caste_id','0');
 // $query = $this->db->get('caste_list');
 // $result = $query->result_array();
-// // var_dump($result);
+// var_dump($result);
 
 // $array = array();
 // foreach($result as $r){
@@ -33,48 +41,38 @@
 // for($i = 0; $i < $count; $i++){
 //     echo $caste = $array[$i];
 //     $caste_id = ($i + 1);
-//     // $this->db->where('caste',$caste);
+//     $this->db->where('caste',$caste);
 //     $data = array(
 //         'caste_id' => $caste_id,
 //         'caste' => $caste,
 //     );
 //     $this->db->insert('caste_id',$data);
-// }
 
+//     $da = array(
+//         'caste_id' => $caste_id,
+//         'caste_in_caste_id' => '1',
+//     );
+//     $this->db->where('caste',$caste);
+//     $this->db->update('caste_list',$da);
+// }
+// correct
 // ------------------------------------
 
+
+// change empty sub caste to None
+
+// $this->db->where('sub_caste','');
 // $query = $this->db->get('caste_list');
 // $result = $query->result_array();
-// // var_dump($result);
+// var_dump($result);
 
-// $array = array();
-// foreach($result as $r){
-//     $sub_caste = $r['sub_caste'];
-//     if(!empty($sub_caste)){
-//     if(!in_array($sub_caste , $array)){
-//         array_push($array , $sub_caste);
-//     }
-// }
+// $data = array(
+//     'sub_caste' => 'None',
+// );
+// $this->db->where('sub_caste','');
+// $this->db->update('caste_list',$data);
 
-// }
-// // var_dump($array);
-// echo $count = count($array);
-
-// for($i = 0; $i < $count; $i++){
-//     echo $sub_caste = $array[$i];
-//     $sub_caste_id = ($i + 1);
-//     $this->db->where('sub_caste',$sub_caste);
-//     $data = array(
-//         'sub_caste_id' => $sub_caste_id,
-//     );
-//     $this->db->update('caste_list',$data);
-// }
-
-
-
-
-
-
+// correct
 
 ?>
 

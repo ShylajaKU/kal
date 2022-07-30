@@ -13,7 +13,15 @@
 
 
   <div class="container cont">
-    <h4>Enter Your Address</h4>
+  <style>
+        .sp{
+            font-size: 1.2rem;
+            padding-left: 10%;
+            color: blue;
+        }
+    </style>
+    <h3>Enter your Address <span class="sp"> Step 2</span></h3>
+    <br>
     <?= form_open('state-entered',array('id'=>'form-1',))?>
 
       <select class="form-control me-2" name="state_id" required

@@ -8,6 +8,18 @@ class Welcome extends CI_Controller {
 		$this->load->view('welcome_message');
 	}
 // ------------------------------------------
+public function home_fc(){
+	// var_dump($this->session->userdata());
+	if($this->session->userdata('logged_in') != '1'){redirect('login');}
+	if($this->session->userdata('level_2') != '1'){redirect('search-by-place');}
+	if($this->session->userdata('level_3') != '1'){redirect('community-details');}
+
+	$this->load->view('templates/head/header');
+	$this->load->view('home/home');
+	$this->load->view('templates/foot/footer');
+
+}
+// ------------------------------------------
 	public function landing(){
 		$this->load->view('templates/head/header');
 		// $this->load->view('templates/login_header/login_header');
@@ -100,7 +112,7 @@ if($this->session->userdata('level_1') == '1'){redirect('home');}
 			redirect('home');
 		}
 		
-		var_dump($this->session->userdata());
+		// var_dump($this->session->userdata());
 	}
 // ------------------------------------------
 public function check_email_exists_fc($email){
@@ -154,22 +166,10 @@ public function check_email_registered_fc($email){
 
 public function logout_fc(){
 	$this->session->sess_destroy();
-	var_dump($this->session->userdata());
+	// var_dump($this->session->userdata());
 }
 // ------------------------------------------
-public function home_fc(){
-	var_dump($this->session->userdata());
-	if($this->session->userdata('logged_in') != '1'){redirect('login');}
-	if($this->session->userdata('level_2') != '1'){redirect('search-by-place');}
 
-	$this->load->view('templates/head/header');
-	$this->load->view('home/home');
-
-	$this->load->view('templates/foot/footer');
-
-}
-
-// ------------------------------------------
 // ------------------------------------------
 // ------------------------------------------
 public function enter_pincode_fc(){
@@ -215,7 +215,7 @@ public function add_address_fc($pincode){
 		$this->load->view('templates/head/header');
 		$this->load->view('register/add_address',$data);
 		$this->load->view('templates/foot/footer');
-var_dump($po_list);
+// var_dump($po_list);
 
 	}else{
 		$address_line_1 = $this->input->post('address_line_1');
@@ -258,22 +258,116 @@ public function does_pincode_exists_fc(){
 }
 // ------------------------------------------
 public function community_details_fc(){
+	if($this->session->userdata('logged_in') != '1'){redirect('login');}
+
+		
+	$query = $this->db->get('relegion_list');
+	$result = $query->result_array();
+	$data['relegion_list'] = $result;
+
 	$query = $this->db->get('caste_id');
 	$result = $query->result_array();
 	$data['caste_id_table'] = $result;
 	$this->load->view('templates/head/header');
     $this->load->view('register/community_details',$data);
     $this->load->view('templates/foot/footer');
+
 }
 // ------------------------------------------
 public function caste_selected(){
-	echo $relegion = $this->input->post('relegion');
+	if($this->session->userdata('logged_in') != '1'){redirect('login');}
+
+	$relegion = $this->input->post('relegion');
+	// $this->session->set_userdata('temp_rel',$relegion);
+	$caste = $this->input->post('caste');
+	// $this->session->set_userdata('temp_cas',$caste);
+
+// var_dump($this->session->userdata());
+	redirect('community-details/'.$relegion.'/'.$caste);
+
+}
+// ------------------------------------------
+public function community_details_relegion_caste_fc($relegion,$caste){
+	if($this->session->userdata('logged_in') != '1'){redirect('login');}
+
 	$this->session->set_userdata('temp_rel',$relegion);
-	echo $caste = $this->input->post('caste');
 	$this->session->set_userdata('temp_cas',$caste);
 
-var_dump($this->session->userdata());
+	$query = $this->db->get('relegion_list');
+	$result = $query->result_array();
+	$data['relegion_list'] = $result;
+	
+	$query = $this->db->get('caste_id');
+	$result = $query->result_array();
+	$data['caste_id_table'] = $result;
+	$data['caste_name'] = $caste;
+	$data['relegion'] = $relegion;
+
+	$this->db->where('caste',$caste);
+	$query = $this->db->get('caste_list');
+	$result = $query->result_array();
+	// var_dump($result);
+	$data['sub_caste_list'] = $result; 
+
+	$this->load->view('templates/head/header');
+    $this->load->view('register/community_details',$data);
+    $this->load->view('templates/foot/footer');
 }
+// ------------------------------------------
+public function sub_caste_selected(){
+	if($this->session->userdata('logged_in') != '1'){redirect('login');}
+
+	$relegion = $this->session->userdata('temp_rel');
+	$caste = $this->session->userdata('temp_cas');
+	$sub_caste = $this->input->post('sub_caste');
+	$this->session->set_userdata('temp_sub_cas',$sub_caste);
+	// var_dump($this->session->userdata());
+	redirect('community-details/'.$relegion.'/'.$caste.'/'.$sub_caste);
+}
+
+// ------------------------------------------
+public function community_details_relegion_caste_subcaste_fc($relegion,$caste,$sub_caste){
+	if($this->session->userdata('logged_in') != '1'){redirect('login');}
+	// $query = $this->db->get('caste_id');
+	// $result = $query->result_array();
+	// $data['caste_id_table'] = $result;
+	// $data['caste_name'] = $caste;
+	// $this->db->where('caste',$caste);
+	// $query = $this->db->get('caste_list');
+	// $result = $query->result_array();
+	// $data['sub_caste_list'] = $result; 
+	// $data['sub_caste_name'] = $sub_caste;
+	// $data['relegion'] = ucwords(strtolower($this->session->userdata('temp_rel')));
+	$data['relegion'] = $relegion;
+	$data['caste'] = $caste;
+	$data['sub_caste'] = $sub_caste;
+	$this->form_validation->set_rules('caste','Caste','required');
+	if(!$this->form_validation->run()){
+	$this->load->view('templates/head/header');
+    $this->load->view('register/save_community_details',$data);
+    $this->load->view('templates/foot/footer');
+	}else{
+		$data = array(
+			'relegion' => $relegion,
+			'caste' => $caste,
+			'sub_caste' => $sub_caste,
+			'level_3' => '1',
+		);
+		$user_id = $this->session->userdata('user_id');
+		// echo $user_id;
+		// var_dump($this->session->userdata());
+		$this->db->where('user_id',$user_id);
+		$this->db->update('users',$data);
+	}
+}
+// ------------------------------------------
+public function go_back_to_community(){
+	$this->session->unset_userdata('temp_rel');
+	$this->session->unset_userdata('temp_cas');
+	$this->session->unset_userdata('temp_sub_cas');
+	redirect('community-details');
+}
+
 // ------------------------------------------
 // ------------------------------------------
 

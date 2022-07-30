@@ -51,7 +51,7 @@ public function check_email_exists_fm($email){
 // ---------------------------------------
 public function set_userdata_from_db($user_id){
         $this->db->where('user_id',$user_id);
-		$select_array = array('user_id','email','email_verified','phone_no','phone_no_verified','name','gender','marital_status','level_1','level_2');
+		$select_array = array('user_id','email','email_verified','phone_no','phone_no_verified','name','gender','marital_status','level_1','level_2','level_3');
 		$this->db->select($select_array);
 		$query = $this->db->get('users');
 		$result = $query->result_array();
