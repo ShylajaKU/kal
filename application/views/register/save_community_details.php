@@ -3,6 +3,9 @@
     <h3>Enter your Personal Details</h3>
     <?= form_open() ?>
 
+    <label class="form-label" for="">language *</label>
+    <input class="form-control" type="text" name="language" required value = "<?=$language ?>" readonly >
+
     <label class="form-label" for="">Relegion *</label>
     <input class="form-control" type="text" name="relegion" required value = "<?=$relegion ?>" readonly >
     

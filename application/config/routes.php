@@ -75,10 +75,10 @@ $route['(:any)/(:any)/(:any)/po_entered'] = 'address_controller/po_in_url_fc';
 
 $route['community-details'] = 'welcome/community_details_fc';
 $route['caste-selected'] = 'welcome/caste_selected';
-$route['community-details/(:any)/(:any)'] = 'welcome/community_details_relegion_caste_fc/$1/$2';
+$route['community-details/(:any)/(:any)/(:any)'] = 'welcome/community_details_language_relegion_caste_fc/$1/$2/$3';
 
 $route['sub-caste-selected'] = 'welcome/sub_caste_selected';
-$route['community-details/(:any)/(:any)/(:any)'] = 'welcome/community_details_relegion_caste_subcaste_fc/$1/$2/$3';
+$route['community-details/(:any)/(:any)/(:any)/(:any)'] = 'welcome/community_details_language_relegion_caste_subcaste_fc/$1/$2/$3/$4';
 
 // relegion etc details
 

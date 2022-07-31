@@ -254,12 +254,13 @@ $this->load->view('templates/foot/footer');
         'level_2' => '1',
     );
     // var_dump($data);
-    var_dump($this->session->userdata());
+    // var_dump($this->session->userdata());
     $unique_id = $user_id = $this->session->userdata('user_id');
     $unique_id_col_name = 'user_id';
     $table_name = 'users';
     $this->update_model->update_fm($unique_id,$unique_id_col_name,$table_name,$data);
     $this->get_model->set_userdata_from_db($user_id);
+    redirect('home');
 }
 }
 // ------------------------------------------

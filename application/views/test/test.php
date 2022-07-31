@@ -74,6 +74,48 @@
 
 // correct
 
+// slug creater
+
+// $res = $this->db->get('language_list')->result_array();
+
+// foreach($res as $r){
+//     $name = $language = $r['language'];
+//     echo $sl_no = $r['sl_no'];
+// $slug = $language;
+
+// $slug = str_replace(' ', '-', $slug);
+// $slug = str_replace('/', '-or-', $slug);
+// $slug = preg_replace('/[^A-Za-z0-9\-]/', '', $slug);
+// $slug = strtolower($slug);
+// $slug = str_replace('--', '-', $slug);
+// $slug = url_title($slug);
+// echo $slug.'<br>';
+
+// $data = array(
+//     'slug' => $slug,
+// );
+// // $this->db->where('sl_no',$sl_no);
+// // $this->db->update('language_list',$data);
+// }
+
+// slug creater
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ?>
 
 

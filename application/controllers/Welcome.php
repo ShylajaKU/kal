@@ -11,8 +11,22 @@ class Welcome extends CI_Controller {
 public function home_fc(){
 	// var_dump($this->session->userdata());
 	if($this->session->userdata('logged_in') != '1'){redirect('login');}
-	if($this->session->userdata('level_2') != '1'){redirect('search-by-place');}
-	if($this->session->userdata('level_3') != '1'){redirect('community-details');}
+	$user_id = $this->session->userdata('user_id');
+	$table_name = 'users';
+	$known_value = $user_id;
+	$col_name_of_known_value = 'user_id';
+	$col_name_of_op_value = 'level_2';
+	$level_2 = $this->get_model->get_any_field_fm($table_name,$known_value,$col_name_of_known_value,$col_name_of_op_value);
+	if($level_2 != '1'){redirect('search-by-place');}
+
+	$col_name_of_op_value = 'level_3';
+	$level_3 = $this->get_model->get_any_field_fm($table_name,$known_value,$col_name_of_known_value,$col_name_of_op_value);
+	if(!$level_3){redirect('community-details');}
+
+	$col_name_of_op_value = 'level_4';
+	$level_4 = $this->get_model->get_any_field_fm($table_name,$known_value,$col_name_of_known_value,$col_name_of_op_value);
+	if(!$level_4){redirect('education-details');}
+
 
 	$this->load->view('templates/head/header');
 	$this->load->view('home/home');
@@ -121,11 +135,11 @@ public function check_email_exists_fc($email){
 
     if($this->get_model->check_email_exists_fm($email)){
         // returned true from model
-        return true;
+        return false;
         // this will return true to set_rules on top
     }else{
 
-        return false;
+        return true;
     }
     // this will returns to set_rules on top
 }
@@ -265,9 +279,15 @@ public function community_details_fc(){
 	$result = $query->result_array();
 	$data['relegion_list'] = $result;
 
+	$query = $this->db->get('language_list');
+	$result = $query->result_array();
+	$data['language_list'] = $result;
+
 	$query = $this->db->get('caste_id');
 	$result = $query->result_array();
 	$data['caste_id_table'] = $result;
+
+
 	$this->load->view('templates/head/header');
     $this->load->view('register/community_details',$data);
     $this->load->view('templates/foot/footer');
@@ -276,20 +296,21 @@ public function community_details_fc(){
 // ------------------------------------------
 public function caste_selected(){
 	if($this->session->userdata('logged_in') != '1'){redirect('login');}
-
+	$language = $this->input->post('language');
 	$relegion = $this->input->post('relegion');
 	// $this->session->set_userdata('temp_rel',$relegion);
 	$caste = $this->input->post('caste');
 	// $this->session->set_userdata('temp_cas',$caste);
 
 // var_dump($this->session->userdata());
-	redirect('community-details/'.$relegion.'/'.$caste);
+	redirect('community-details/'.$language.'/'.$relegion.'/'.$caste);
 
 }
 // ------------------------------------------
-public function community_details_relegion_caste_fc($relegion,$caste){
+public function community_details_language_relegion_caste_fc($language,$relegion,$caste){
 	if($this->session->userdata('logged_in') != '1'){redirect('login');}
 
+	$this->session->set_userdata('temp_lan',$language);
 	$this->session->set_userdata('temp_rel',$relegion);
 	$this->session->set_userdata('temp_cas',$caste);
 
@@ -297,6 +318,10 @@ public function community_details_relegion_caste_fc($relegion,$caste){
 	$result = $query->result_array();
 	$data['relegion_list'] = $result;
 	
+	$query = $this->db->get('language_list');
+	$result = $query->result_array();
+	$data['language_list'] = $result;
+
 	$query = $this->db->get('caste_id');
 	$result = $query->result_array();
 	$data['caste_id_table'] = $result;
@@ -317,16 +342,17 @@ public function community_details_relegion_caste_fc($relegion,$caste){
 public function sub_caste_selected(){
 	if($this->session->userdata('logged_in') != '1'){redirect('login');}
 
+	$language = $this->session->userdata('temp_lan');
 	$relegion = $this->session->userdata('temp_rel');
 	$caste = $this->session->userdata('temp_cas');
 	$sub_caste = $this->input->post('sub_caste');
 	$this->session->set_userdata('temp_sub_cas',$sub_caste);
 	// var_dump($this->session->userdata());
-	redirect('community-details/'.$relegion.'/'.$caste.'/'.$sub_caste);
+	redirect('community-details/'.$language.'/'.$relegion.'/'.$caste.'/'.$sub_caste);
 }
 
 // ------------------------------------------
-public function community_details_relegion_caste_subcaste_fc($relegion,$caste,$sub_caste){
+public function community_details_language_relegion_caste_subcaste_fc($language,$relegion,$caste,$sub_caste){
 	if($this->session->userdata('logged_in') != '1'){redirect('login');}
 	// $query = $this->db->get('caste_id');
 	// $result = $query->result_array();
@@ -338,6 +364,15 @@ public function community_details_relegion_caste_subcaste_fc($relegion,$caste,$s
 	// $data['sub_caste_list'] = $result; 
 	// $data['sub_caste_name'] = $sub_caste;
 	// $data['relegion'] = ucwords(strtolower($this->session->userdata('temp_rel')));
+	// $data['language'] = $language;
+	$known_value = $language;
+	$table_name = 'language_list';
+	$col_name_of_known_value = 'slug';
+	$col_name_of_op_value = 'language';
+	$mother_tounge = $this->get_model->get_any_field_fm($table_name,$known_value,$col_name_of_known_value,$col_name_of_op_value);
+	$data['language'] = $mother_tounge;
+	$col_name_of_op_value = 'sl_no';
+	$language_id = $this->get_model->get_any_field_fm($table_name,$known_value,$col_name_of_known_value,$col_name_of_op_value);
 	$data['relegion'] = $relegion;
 	$data['caste'] = $caste;
 	$data['sub_caste'] = $sub_caste;
@@ -348,6 +383,8 @@ public function community_details_relegion_caste_subcaste_fc($relegion,$caste,$s
     $this->load->view('templates/foot/footer');
 	}else{
 		$data = array(
+			'mother_tounge' => $mother_tounge,
+			'language_id' => $language_id,
 			'relegion' => $relegion,
 			'caste' => $caste,
 			'sub_caste' => $sub_caste,
@@ -358,6 +395,7 @@ public function community_details_relegion_caste_subcaste_fc($relegion,$caste,$s
 		// var_dump($this->session->userdata());
 		$this->db->where('user_id',$user_id);
 		$this->db->update('users',$data);
+		redirect('home');
 	}
 }
 // ------------------------------------------
