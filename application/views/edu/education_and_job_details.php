@@ -3,6 +3,8 @@
 <script src="<?= base_url('assets/js/jquery.min.js')?>"></script>
 <script src="<?= base_url('assets/js/selectize.min.js')?>"></script>
 
+<!-- edu_controller/education_and_job_fc -->
+
 <style>
     #hidden_div {
     display: none;

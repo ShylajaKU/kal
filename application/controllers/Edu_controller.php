@@ -60,22 +60,27 @@ public function education_and_job_fc(){
             $profession = $vip;
         }
         //=======================================
-
-
-
-
+        $annual_income_id = $known_value = $this->input->post('annual_income');
+        $table_name = 'annual_income'; $col_name_of_known_value = 'sl_no'; $col_name_of_op_value = 'income_bracket';
+        $income_bracket = $this->get_model->get_any_field_fm($table_name,$known_value,$col_name_of_known_value,$col_name_of_op_value);
+        //=======================================
+        $data = array(
+            'education' => $higher_education,
+            'occupation' => $profession,
+            'income_bracket' => $income_bracket,
+            'i_b_id' => $annual_income_id,
+            'level_4' => 1,
+        );
+        $user_id = $this->session->userdata('user_id');
+        $this->db->where('user_id',$user_id);
+        $this->db->update('users',$data);
+        redirect('home');
     }
-
-
-
-
-
-
-
 
 }
 
 // ------------------------------------------
+
 // ------------------------------------------
 // ------------------------------------------
 // ------------------------------------------

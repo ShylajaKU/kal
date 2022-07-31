@@ -27,6 +27,9 @@ public function home_fc(){
 	$level_4 = $this->get_model->get_any_field_fm($table_name,$known_value,$col_name_of_known_value,$col_name_of_op_value);
 	if(!$level_4){redirect('education-details');}
 
+	$col_name_of_op_value = 'level_5';
+	$level_5 = $this->get_model->get_any_field_fm($table_name,$known_value,$col_name_of_known_value,$col_name_of_op_value);
+	if(!$level_5){redirect('family-details');}
 
 	$this->load->view('templates/head/header');
 	$this->load->view('home/home');
@@ -123,6 +126,8 @@ if($this->session->userdata('level_1') == '1'){redirect('home');}
 			$this->session->set_userdata('user_id',$user_id);
 			$this->session->set_userdata('logged_in','1');
 			$this->get_model->set_userdata_from_db($user_id);
+			$official_email_sl_no = '1';
+			$this->verification_model->send_email_verication_link_fc($user_id,$official_email_sl_no);
 			redirect('home');
 		}
 		
@@ -279,6 +284,7 @@ public function community_details_fc(){
 	$result = $query->result_array();
 	$data['relegion_list'] = $result;
 
+	// $this->db->order_by('no_of_users','desc');
 	$query = $this->db->get('language_list');
 	$result = $query->result_array();
 	$data['language_list'] = $result;
@@ -400,6 +406,7 @@ public function community_details_language_relegion_caste_subcaste_fc($language,
 }
 // ------------------------------------------
 public function go_back_to_community(){
+	$this->session->unset_userdata('temp_lan');
 	$this->session->unset_userdata('temp_rel');
 	$this->session->unset_userdata('temp_cas');
 	$this->session->unset_userdata('temp_sub_cas');
@@ -408,8 +415,69 @@ public function go_back_to_community(){
 
 // --------------------================================----------------------
 // ------------------------------------------
+public function family_details_fc(){
+	if($this->session->userdata('logged_in') != '1'){redirect('login');}
 
+	$data['family_class_list'] = $this->db->get('family_class')->result_array();
+
+	$this->form_validation->set_rules('family_class','','required');
+	if(!$this->form_validation->run()){
+	$this->load->view('templates/head/header');
+    $this->load->view('register/family_details',$data);
+    $this->load->view('templates/foot/footer');
+	}else{
+		$mothers_name = $this->input->post('mothers_name');
+		$fathers_name = $this->input->post('fathers_name');
+		$family_class = $this->input->post('family_class');
+		$data = array(
+			'mothers_name' => $mothers_name,
+			'fathers_name' => $fathers_name,
+			'family_class' => $family_class,
+			'level_5' => 1,
+		);
+		$user_id = $this->session->userdata('user_id');
+		$this->db->where('user_id',$user_id);
+		$this->db->update('users',$data);
+		redirect('home');
+	}
+}
 // ------------------------------------------
+public function height_calculator_fc(){
+	if($this->session->userdata('logged_in') != '1'){redirect('login');}
+
+	$this->form_validation->set_rules('height_in_cm','','required');
+	if(!$this->form_validation->run()){
+	$this->load->view('templates/head/header');
+    $this->load->view('register/height_details');
+    $this->load->view('templates/foot/footer');
+	}else{
+		// height in cm
+		$height_in_cm = $this->input->post('height_in_cm');
+
+		//height in feet and inch
+		$height_in_feet = ($height_in_cm / 30.48);
+		$whole = floor($height_in_feet);
+		$decimal = $height_in_feet - $whole ;
+		$inch = floor($decimal * 12) ;
+		echo $string = $whole.'\' '.$inch.'"';
+		// 1 feet = 12 inches
+		// $whole feet #inch inch
+
+		//height in feet only
+		$height_in_feet_rounded = number_format($height_in_feet,1);
+
+		$data = array(
+			'height_cm' => $height_in_cm,
+			'height_feet' => $height_in_feet_rounded,
+			'height_feet_inch' => $string,
+			'level_6' => 1,
+		);
+		$user_id = $this->session->userdata('user_id');
+		$this->db->where('user_id',$user_id);
+		$this->db->update('users',$data);
+		redirect('home');
+	}
+}
 // ------------------------------------------
 // ------------------------------------------
 // ------------------------------------------

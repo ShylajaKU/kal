@@ -52,6 +52,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'welcome/landing';
 $route['ci'] = 'welcome/ci';
 $route['register'] = 'welcome/register_1st_page';
+
+// send email verification link
+$route['send-email-verification-code/(:any)/(:any)'] = 'verification_controller/send_email_verication_link_fc/$1/$2';
+// send email verification link
+
+
 $route['login'] = 'welcome/login_fc';
 $route['logout'] = 'welcome/logout_fc';
 $route['home'] = 'welcome/home_fc';
@@ -88,6 +94,16 @@ $route['education-details'] = 'edu_controller/education_and_job_fc';
 
 // education details
 
+//family_details
+
+$route['family-details'] = 'welcome/family_details_fc';
+
+// family_details
+// height_calculator_fc
+
+$route['add-height'] = 'welcome/height_calculator_fc';
+
+// height
 
 $route['test'] = 'admin_controller/test_fc';
 $route['404_override'] = '';
