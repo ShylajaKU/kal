@@ -49,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'welcome/landing';
+$route['default_controller'] = 'welcome/landing_fc';
 $route['ci'] = 'welcome/ci';
 $route['register'] = 'welcome/register_1st_page';
 
@@ -57,6 +57,7 @@ $route['register'] = 'welcome/register_1st_page';
 $route['send-email-verification-code/(:any)/(:any)'] = 'verification_controller/send_email_verication_link_fc/$1/$2';
 $route['verify-your-email/(:any)/(:num)/(:any)'] = 'verification_controller/verify_your_email_fc/$1/$2/$3';
 // send email verification link
+
 
 
 $route['login'] = 'welcome/login_fc';
@@ -110,6 +111,10 @@ $route['add-height'] = 'welcome/height_calculator_fc';
 $route['image-uploader'] = 'image_uploader_controller/image_upload_fc';
 // upload image
 
+// policies
+$route['privacy-policy'] = 'welcome/privacy_policy_fc';
+$route['terms-and-conditions'] = 'welcome/terms_and_conditions_fc';
+// policies
 
 // plan
 // $route['view-your-plan'] = 'plan_controller/view_your_plan_fc';

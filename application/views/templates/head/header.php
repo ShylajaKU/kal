@@ -41,12 +41,17 @@ $site_name = 'k4kalyanam.in';
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
+  <!-- <div class="container px-4"> -->
+
     <a class="navbar-brand" href="<?= base_url()?>"><?= $site_name ?></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
+      <li class="nav-item">
+          <div class="nav-link active">Version 1.0.1 beta</div>
+        </li>
       <?php if(!$this->session->userdata('logged_in')){ ?>
         <li class="nav-item">
           <a class="nav-link active" href="<?= base_url('register')?>">Register</a>
@@ -62,19 +67,20 @@ $site_name = 'k4kalyanam.in';
         <li class="nav-item">
           <a class="nav-link" href="<?= base_url('contact')?>">Contact Us</a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" href="<?= base_url('privacy-policy')?>">Privacy</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="<?= base_url('terms')?>">Terms</a>
-        </li>
+        </li> -->
 
       </ul>
     </div>
   </div>
 </nav>
+<?php if($this->uri->segment(1) != ''){ ?>
 <br>
-
+<?php } ?>
 <style>
   .mystyle{
     color: black;

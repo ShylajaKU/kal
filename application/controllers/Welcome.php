@@ -37,7 +37,7 @@ public function home_fc(){
 
 }
 // ------------------------------------------
-	public function landing(){
+	public function landing_fc(){
 		$this->load->view('templates/head/header');
 		// $this->load->view('templates/login_header/login_header');
 		
@@ -502,7 +502,17 @@ public function height_calculator_fc(){
 // ------------------------------------------
 // ------------------------------------------
 // ------------------------------------------
+public function privacy_policy_fc(){
+	$this->load->view('templates/head/header');
+    $this->load->view('policies/privacy_policy');
+    $this->load->view('templates/foot/footer');
+}
 // ------------------------------------------
+public function terms_and_conditions_fc(){
+	$this->load->view('templates/head/header');
+    $this->load->view('policies/terms_and_conditions');
+    $this->load->view('templates/foot/footer');
+}
 // ------------------------------------------
 // ------------------------------------------
 // ------------------------------------------
