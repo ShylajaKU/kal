@@ -74,3 +74,30 @@ $site_name = 'k4kalyanam.in';
   </div>
 </nav>
 <br>
+
+<style>
+  .mystyle{
+    color: black;
+  }
+</style>
+<?php 
+// var_dump($this->session->userdata());
+//var_dump($this->session->flashdata()); 
+?>
+<div class="container vip-container">
+<?php if($this->session->flashdata('error')): ?>
+
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong class="mystyle"><?= $this->session->flashdata('error') ?> </strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<?php endif; ?>
+
+<?php if($this->session->flashdata('success')): ?>
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong><?= $this->session->flashdata('success') ?></strong> 
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<?php endif; ?>
+
+</div>

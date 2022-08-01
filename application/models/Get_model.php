@@ -51,11 +51,11 @@ public function check_email_exists_fm($email){
 // ---------------------------------------
 public function set_userdata_from_db($user_id){
         $this->db->where('user_id',$user_id);
-		$select_array = array('user_id','email','email_verified','phone_no','phone_no_verified','name','gender','marital_status','level_1','level_2','level_3');
-		$this->db->select($select_array);
+		// $select_array = array('user_id','email','email_verified','phone_no','phone_no_verified','name','gender','marital_status','level_1','level_2','level_3');
+		$this->db->select('user_id');
 		$query = $this->db->get('users');
 		$result = $query->result_array();
-        $this->session->set_userdata($result[0]);
+        $this->session->set_userdata($result);
 }
 // ---------------------------------------
 public function check_password_and_return_user_id_fm($email, $password){
@@ -67,8 +67,9 @@ public function check_password_and_return_user_id_fm($email, $password){
     if(password_verify($password, $hash))
     {
         $this->db->where('email', $email);
-        $result = $this->db->get('users');
-        return $result->row(0)->user_id;
+        $result = $this->db->get('users')->result_array();
+        $user_id = $result[0]['user_id'];
+        return $user_id;
     }else{
         return false;
     }

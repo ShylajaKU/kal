@@ -55,6 +55,7 @@ $route['register'] = 'welcome/register_1st_page';
 
 // send email verification link
 $route['send-email-verification-code/(:any)/(:any)'] = 'verification_controller/send_email_verication_link_fc/$1/$2';
+$route['verify-your-email/(:any)/(:num)/(:any)'] = 'verification_controller/verify_your_email_fc/$1/$2/$3';
 // send email verification link
 
 
@@ -104,6 +105,19 @@ $route['family-details'] = 'welcome/family_details_fc';
 $route['add-height'] = 'welcome/height_calculator_fc';
 
 // height
+
+// upload image
+$route['image-uploader'] = 'image_uploader_controller/image_upload_fc';
+// upload image
+
+
+// plan
+// $route['view-your-plan'] = 'plan_controller/view_your_plan_fc';
+// $route['select-plan'] = 'plan_controller/select_plan_fc';
+// $route['create-plan'] = 'plan_controller/create_plan_fc';
+
+// plan
+
 
 $route['test'] = 'admin_controller/test_fc';
 $route['404_override'] = '';

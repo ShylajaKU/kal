@@ -6,7 +6,7 @@
         <IgnoreTimeShift/>
     </Compare>
     <Synchronize>
-        <Variant>Update</Variant>
+        <Variant>Mirror</Variant>
         <DetectMovedFiles>false</DetectMovedFiles>
         <DeletionPolicy>RecycleBin</DeletionPolicy>
         <VersioningFolder Style="Replace"/>
@@ -36,7 +36,7 @@
     <LogFolder/>
     <EmailNotification Condition="Always"/>
     <Batch>
-        <ProgressDialog Minimized="false" AutoClose="false"/>
+        <ProgressDialog Minimized="false" AutoClose="true"/>
         <ErrorDialog>Show</ErrorDialog>
         <PostSyncAction>None</PostSyncAction>
     </Batch>

@@ -25,6 +25,33 @@ $this->verification_model->send_verification_email_fm($email,$official_email_sl_
 
 }
 // ------------------------------------------
+public function verify_your_email_fc($email_ver_code_one,$user_id,$email_ver_code_two){
+    $array = array(
+        'user_id' => $user_id,
+        'email_ver_code_one' => $email_ver_code_one,
+        'email_ver_code_two' => $email_ver_code_two,
+    );
+
+    $this->db->where($array); 
+    $query = $this->db->get('users');
+    $count = $query->num_rows();
+    
+    $data['email_verified'] = 2;
+
+    if($count > 0){
+        $data = array(
+            'email_verified' => 1,
+        );
+        $this->db->where($array);
+        $this->db->update('users',$data);
+        $data['email_verified'] = 1;
+    }else{
+        $data['email_verified'] = 0;
+    }
+    $this->load->view('templates/head/header');
+    $this->load->view('register/verify_your_email',$data);
+    $this->load->view('templates/foot/footer'); 
+}
 // ------------------------------------------
 // ------------------------------------------
 // ------------------------------------------

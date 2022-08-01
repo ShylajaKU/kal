@@ -163,11 +163,30 @@ public function login_fc(){
 	}else{
 		$email = $this->input->post('email');
 		$password = $this->input->post('password');
-		$user_id = $this->get_model->check_password_and_return_user_id_fm($email , $password);
-		$this->get_model->set_userdata_from_db($user_id);
+		$table_name = 'users';
+    $col_name_of_known_value = 'email';
+    $col_name_of_op_value = 'password';
+    $known_value = $email;
+    $hash = $this->get_model->get_any_field_fm($table_name,$known_value,$col_name_of_known_value,$col_name_of_op_value);
+    if(password_verify($password, $hash))
+    {
+        $this->db->where('email', $email);
+        $result = $this->db->get('users')->result_array();
+        $user_id = $result[0]['user_id'];
 		$this->session->set_userdata('logged_in','1');
-// var_dump($this->session->userdata());
+		$this->session->set_userdata('user_id',$user_id);
+		$this->session->set_flashdata('success','Login Successfull');
 		redirect('home');
+		// var_dump($this->session->userdata());
+	}else{
+		$this->session->set_flashdata('error','Login is invalid');
+		// var_dump($this->session->flashdata());
+		// var_dump($this->session->userdata());
+		redirect('login');
+		
+	}
+
+
 	}
 }
 // ------------------------------------------
