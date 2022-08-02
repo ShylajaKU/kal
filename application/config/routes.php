@@ -120,6 +120,9 @@ $route['terms-and-conditions'] = 'welcome/terms_and_conditions_fc';
 $route['your-profile'] = 'user_controller/your_profile_fc';
 // your profile
 
+// view your images
+$route['your-photos'] = 'image_controller/view_your_images_fc';
+// view your images
 
 
 // plan

@@ -103,6 +103,24 @@ $this->email->message('
 
     }
 // ---------------------------------------
+public function verify_user_fm(){
+    $user_id = $this->session->userdata('user_id');
+    $unique_id = $this->session->userdata('unique_id');
+    $array = array(
+        'user_id' => $user_id,
+        'unique_id' => $unique_id,
+    );
+    $this->db->where($array);
+    $query = $this->db->get('users');
+    $users_table = $query->result_array();
+    $count = $query->num_rows();
+    if($count !== 1){
+        $this->session->set_flashdata('error','Verification Failed Please login again');
+        return false;
+    }else{
+        return true;
+    }
+}
 // ---------------------------------------
 // ---------------------------------------
 // ---------------------------------------

@@ -13,7 +13,7 @@ public function get_all_fm($table_name){
 public function get_rows_with_a_common_value_fm($known_value,$col_name_of_known_value,$table_name){
 $this->db->where($col_name_of_known_value , $known_value);
 $query = $this->db->get($table_name);
-return $result = $query->result_array;
+return $result = $query->result_array();
 }
 
 // ---------------------------------------

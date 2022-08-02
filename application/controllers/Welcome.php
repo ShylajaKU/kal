@@ -60,20 +60,20 @@ if($this->session->userdata('level_1') == '1'){redirect('home');}
 		$this->form_validation->set_rules('confirm_password','Confirm Password','required');
 
 		if($this->form_validation->run() === false){
-			$created_by = $this->input->post('created_by');
-		$this->session->set_userdata('created_by', $created_by);
-			$gender = $this->input->post('gender');
-		$this->session->set_userdata('gender', $gender);
-			$marital_status = $this->input->post('marital_status');
-	$this->session->set_userdata('marital_status', $marital_status);
-			$name_b_g = $this->input->post('name_b_g');
-	$this->session->set_userdata('name_b_g', $name_b_g);
-			$dob = $this->input->post('dob');
-	$this->session->set_userdata('dob', $dob);
-			$phone_no = $this->input->post('phone_no');
-	$this->session->set_userdata('phone_no', $phone_no);
-			$email = $this->input->post('email');
-	$this->session->set_userdata('email', $email);
+				$created_by = $this->input->post('created_by');
+			$this->session->set_userdata('created_by', $created_by);
+				$gender = $this->input->post('gender');
+			$this->session->set_userdata('gender', $gender);
+				$marital_status = $this->input->post('marital_status');
+			$this->session->set_userdata('marital_status', $marital_status);
+					$name_b_g = $this->input->post('name_b_g');
+			$this->session->set_userdata('name_b_g', $name_b_g);
+					$dob = $this->input->post('dob');
+			$this->session->set_userdata('dob', $dob);
+					$phone_no = $this->input->post('phone_no');
+			$this->session->set_userdata('phone_no', $phone_no);
+					$email = $this->input->post('email');
+			$this->session->set_userdata('email', $email);
 
 
 		$this->load->view('templates/head/header');
@@ -130,6 +130,7 @@ if($this->session->userdata('level_1') == '1'){redirect('home');}
 			$this->get_model->set_userdata_from_db($user_id);
 			$official_email_sl_no = '1';
 			$this->verification_model->send_email_verication_link_fc($user_id,$official_email_sl_no);
+		
 			redirect('home');
 		}
 		
@@ -179,6 +180,8 @@ public function login_fc(){
 		$this->session->set_userdata('logged_in','1');
 		$this->session->set_userdata('user_id',$user_id);
 		$this->session->set_userdata('unique_id',$unique_id);
+		$this->session->set_userdata('level_1',$result[0]['level_1']);
+
 		$this->session->set_flashdata('success','Login Successfull');
 		redirect('home');
 		// var_dump($this->session->userdata());

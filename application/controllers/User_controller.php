@@ -21,7 +21,6 @@ public function your_profile_fc(){
     }else{
         $data['users_table'] = $users_table[0];
         // var_dump($users_table[0]);
-    
 
     $this->load->view('templates/head/header');
     $this->load->view('user/your_profile',$data);
