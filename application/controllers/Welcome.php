@@ -99,8 +99,10 @@ if($this->session->userdata('level_1') == '1'){redirect('home');}
 			$phone_no = $this->input->post('phone_no');
 			$email = $this->input->post('email');
 			$enc_password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
+			$unique_id = random_string('alnum', round(rand(8,14)));
 			$data = array(
 				'email' => $email,
+				'unique_id' => $unique_id,
 				'email_verified' => '0',
 				'phone_no' => $phone_no,
 				'phone_no_verified' => '0',
@@ -173,8 +175,10 @@ public function login_fc(){
         $this->db->where('email', $email);
         $result = $this->db->get('users')->result_array();
         $user_id = $result[0]['user_id'];
+		$unique_id = $result[0]['unique_id'];
 		$this->session->set_userdata('logged_in','1');
 		$this->session->set_userdata('user_id',$user_id);
+		$this->session->set_userdata('unique_id',$unique_id);
 		$this->session->set_flashdata('success','Login Successfull');
 		redirect('home');
 		// var_dump($this->session->userdata());

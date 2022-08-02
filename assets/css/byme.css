@@ -1,11 +1,19 @@
 .vip-container{
     width: 80vw;
 }
+.vip-container-two{
+    width: 50vw;
+}
 @media (min-width: 750px) {
     .vip-container{
     width:50vw;
     }
+    .vip-container-two{
+        width: 50vw;
+    }
 }
+
+
 
 .vip-div-center{
     margin: auto;

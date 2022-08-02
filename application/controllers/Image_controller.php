@@ -34,7 +34,7 @@ public function image_upload_fc(){
             $this->load->view('image_upload/upload_status',$data);
             $this->load->view('templates/foot/footer'); 
         }else{
-            $visibility = 1;
+            // $visibility = 1;
 
             $prfile_photo = $this->input->post('profile_photo_yes_or_no');
             if($prfile_photo){
@@ -48,7 +48,7 @@ public function image_upload_fc(){
             $data1 = array(
                 'user_id' => $user_id,
                 'profile_photo' => $prfile_photo,
-                'visibility' => $visibility,
+                // 'visibility' => $visibility,
             );
                 $data = array_merge($data1,$this->upload->data());
                 var_dump($data);

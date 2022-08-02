@@ -116,6 +116,12 @@ $route['privacy-policy'] = 'welcome/privacy_policy_fc';
 $route['terms-and-conditions'] = 'welcome/terms_and_conditions_fc';
 // policies
 
+// your profile
+$route['your-profile'] = 'user_controller/your_profile_fc';
+// your profile
+
+
+
 // plan
 // $route['view-your-plan'] = 'plan_controller/view_your_plan_fc';
 // $route['select-plan'] = 'plan_controller/select_plan_fc';
