@@ -171,6 +171,9 @@
 <div id="error-nwl"></div>
 <!-- ------------------------------------- -->
 
+<div><p>By clicking Register you are agreeing to our <a href="<?= base_url('terms-and-conditions')?>">Terms and Conditions</a> and <a href="<?= base_url('privacy-policy')?>">Privacy Policy</a></p></div>
+<!-- ------------------------------------- -->
+
     <button type="submit" class="btn btn-primary vip-center">Register</button>
     <!-- ------------------------------------- -->
     <a style="margin-left:15px ;" href="http://">Login Here</a>

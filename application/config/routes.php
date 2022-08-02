@@ -108,7 +108,7 @@ $route['add-height'] = 'welcome/height_calculator_fc';
 // height
 
 // upload image
-$route['image-uploader'] = 'image_uploader_controller/image_upload_fc';
+$route['image-uploader'] = 'image_controller/image_upload_fc';
 // upload image
 
 // policies

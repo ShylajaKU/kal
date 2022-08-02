@@ -16,6 +16,13 @@ $email = '';
 
 <p>The following terminology applies to these Terms and Conditions, Privacy Statement and Disclaimer Notice and all Agreements: "Client", "You" and "Your" refers to you, the person log on this website and compliant to the Company’s terms and conditions. "The Company", "Ourselves", "We", "Our" and "Us", refers to our Company. "Party", "Parties", or "Us", refers to both the Client and ourselves. All terms refer to the offer, acceptance and consideration of payment necessary to undertake the process of our assistance to the Client in the most appropriate manner for the express purpose of meeting the Client’s needs in respect of provision of the Company’s stated services, in accordance with and subject to, prevailing law of Netherlands. Any use of the above terminology or other words in the singular, plural, capitalization and/or he/she or they, are taken as interchangeable and therefore as referring to same.</p>
 
+<h3><strong>Usage terms</strong></h3>
+<ul>
+    <li><?= $site_name ?> is strictly for matrimonial purpose only.</li>
+    <li>You should not use this as a dating website.</li>
+    <li>If any such reports were found <?= $site_name ?> reserves all the rights to suspend or terminate your account.</li>
+</ul>
+
 <h3><strong>Cookies</strong></h3>
 
 <p>We employ the use of cookies. By accessing <?= $site_name ?>, you agreed to use cookies in agreement with the <?= $site_name ?>'s Privacy Policy.</p>
@@ -47,6 +54,7 @@ $email = '';
     <li>The Comments do not invade any intellectual property right, including without limitation copyright, patent or trademark of any third party;</li>
     <li>The Comments do not contain any defamatory, libelous, offensive, indecent or otherwise unlawful material which is an invasion of privacy</li>
     <li>The Comments will not be used to solicit or promote business or custom or present commercial activities or unlawful activity.</li>
+
 </ul>
 
 <p>You hereby grant <?= $site_name ?> a non-exclusive license to use, reproduce, edit and authorize others to use, reproduce and edit any of your Comments in any and all forms, formats or media.</p>

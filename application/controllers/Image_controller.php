@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Image_uploader_controller extends CI_Controller {
+class Image_controller extends CI_Controller {
 // ------------------------------------------
 public function image_upload_fc(){
     if(!$this->session->userdata('logged_in')){
@@ -45,14 +45,16 @@ public function image_upload_fc(){
             $this->db->where('user_id',$user_id);
             $this->db->update('user_images',$data_pp);
 
-            $data = array(
+            $data1 = array(
                 'user_id' => $user_id,
                 'profile_photo' => $prfile_photo,
                 'visibility' => $visibility,
             );
-                $data_all = array_merge($data,$this->upload->data());
-                var_dump($data_all);
-                $this->db->insert('user_images',$data_all);
+                $data = array_merge($data1,$this->upload->data());
+                var_dump($data);
+                // $this->db->insert('user_images',$data_all);
+                $table_name = 'user_images';
+                $insert_id = $this->image_model->insert_data_fm($table_name,$data);
             
         }
 

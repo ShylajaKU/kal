@@ -64,15 +64,7 @@ $site_name = 'k4kalyanam.in';
           <a class="nav-link active" href="<?= base_url('logout')?>">Logout</a>
         </li>
       <?php } ?>
-        <li class="nav-item">
-          <a class="nav-link" href="<?= base_url('contact')?>">Contact Us</a>
-        </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link" href="<?= base_url('privacy-policy')?>">Privacy</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="<?= base_url('terms')?>">Terms</a>
-        </li> -->
+        <?php //class=nav-link only gives less brighter links  ?>
 
       </ul>
     </div>

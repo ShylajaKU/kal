@@ -10,6 +10,9 @@
                 <a class="btn btn-lg btn-light" href="<?= base_url('register')?>">Get 6 month Premium for free now!</a>
                 <br><br>
                 <p class="lead">Register now and get <strong>6 month premium</strong> membership for absolutely <strong>free.</strong></p>
+                <br>
+                <a class="btn btn-lg btn-light" href="<?= base_url('login')?>">Already member Login here.</a>
+
             </div>
         </header>
         <!-- About section-->
@@ -57,14 +60,14 @@
                         <strong> Pricing :</strong>
                         <ul>
                             <li>Industry Best pricing.</li>
-                            <li>Premium Plans for completely free of cost.</li>
-                            <li>No payments required at Beta stage of the website.</li>
+                            <li><strong> Premium Plans for completely free of cost. </strong></li>
+                            <li><strong style="color:blue;">No payments required at Beta stage of the website.</strong></li>
                         </ul>
                         <hr>
                         <strong> Website features : </strong>
                         <ul>
                             <li>Search and find matches as you like.</li>
-                            <li>Contact the matches without any restrictions *</li>
+                            <li>Contact the matches without any <abbr title="There are no restrictions at the beta stage"> restrictions *</abbr></li>
                         </ul>
                         </p>
                     </div>
@@ -76,7 +79,7 @@
             <div class="container px-4">
                 <div class="row gx-4 justify-content-center">
                     <div class="col-lg-8">
-                        <h2>Contact us</h2>
+                        <h2 id="contact">Contact us</h2>
                         <p class="lead">Email : customer-contact@k4kalyanam.in</p>
                     </div>
                 </div>
