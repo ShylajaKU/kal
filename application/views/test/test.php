@@ -101,95 +101,123 @@
 // slug creater
 
 
-$email = 'vishnuip4@gmail.com';
-$this->db->where('email',$email);
-// $this->db->select('user_id');
-$result = $this->db->get('users')->result_array();
+// email sender
+// $email = 'vishnuip4@gmail.com';
+// $this->db->where('email',$email);
+// // $this->db->select('user_id');
+// $result = $this->db->get('users')->result_array();
+// // var_dump($result);
+// $user_id = $result[0]['user_id'];
+// echo $email_ver_code_one = random_string('alnum', round(rand(10,16)));
+// echo $email_ver_code_two = random_string('alnum', round(rand(7,15)));
+
+// $data = array(
+//     'email_ver_code_one' => $email_ver_code_one,
+//     'email_ver_code_two' => $email_ver_code_two,
+// );
+// $this->db->where('user_id',$user_id);
+// $this->db->update('users',$data);
+
+// $official_email_sl_no = '1';
+// $this->db->where('sl_no',$official_email_sl_no);
+// $result = $this->db->get('official_emails')->result_array();
 // var_dump($result);
-$user_id = $result[0]['user_id'];
-echo $email_ver_code_one = random_string('alnum', round(rand(10,16)));
-echo $email_ver_code_two = random_string('alnum', round(rand(7,15)));
 
-$data = array(
-    'email_ver_code_one' => $email_ver_code_one,
-    'email_ver_code_two' => $email_ver_code_two,
-);
-$this->db->where('user_id',$user_id);
-$this->db->update('users',$data);
+// echo $official_email = $result[0]['email'];
+// echo $password = $result[0]['pass'];
+// echo $host = $result[0]['host'];
+// echo $port = $result[0]['port'];
 
-$official_email_sl_no = '1';
-$this->db->where('sl_no',$official_email_sl_no);
-$result = $this->db->get('official_emails')->result_array();
-var_dump($result);
+// $this->load->library('email');
 
-echo $official_email = $result[0]['email'];
-echo $password = $result[0]['pass'];
-echo $host = $result[0]['host'];
-echo $port = $result[0]['port'];
+// if(base_url() != 'https://k4kalyanam.in/' ){
+//     $protocol = 'smtp';   
+//      // smtp for localhost
+// }else{
+//     $protocol = 'mail';  
+//       // mail for server
+// }
 
-$this->load->library('email');
+// $config = array(
+//     'smtp_crypto' => 'ssl', //can be 'ssl' or 'tls' for example
+//     'protocol' => $protocol,
+//     'smtp_host' => $host,
+//     // 'smtp_port' => 465,
+//     'smtp_port' => $port,
+//     'smtp_user' => $official_email,
+//     'smtp_pass' => $password,
+//     'mailtype' => 'html', //plaintext 'text' mails or 'html'
+//     'smtp_timeout' => '200', //in seconds
+//     'charset' => 'utf-8',
+//     'wordwrap' => TRUE,
+//     'newline' => '\r\n',
+//     'priority' => 1,
+// );
 
-if(base_url() != 'https://k4kalyanam.in/' ){
-    $protocol = 'smtp';   
-     // smtp for localhost
-}else{
-    $protocol = 'mail';  
-      // mail for server
-}
+// $site_name = 'k4kalyanam.in';
 
-$config = array(
-    'smtp_crypto' => 'ssl', //can be 'ssl' or 'tls' for example
-    'protocol' => $protocol,
-    'smtp_host' => $host,
-    // 'smtp_port' => 465,
-    'smtp_port' => $port,
-    'smtp_user' => $official_email,
-    'smtp_pass' => $password,
-    'mailtype' => 'html', //plaintext 'text' mails or 'html'
-    'smtp_timeout' => '200', //in seconds
-    'charset' => 'utf-8',
-    'wordwrap' => TRUE,
-    'newline' => '\r\n',
-    'priority' => 1,
-);
+// $this->email->initialize($config);
 
-$site_name = 'k4kalyanam.in';
+// $this->email->from($official_email, $site_name.' - Email Verification');
+// $this->email->to($email);
+// $this->email->subject('Email verification link - '.$site_name);
 
-$this->email->initialize($config);
+// $message = '<a href="'.base_url().'verify-your-email/'.$email_ver_code_one.'/'.$user_id.'/'.$email_ver_code_two.'">Click here to verify your email</a>';
 
-$this->email->from($official_email, $site_name.' - Email Verification');
-$this->email->to($email);
-$this->email->subject('Email verification link - '.$site_name);
-
-$message = '<a href="'.base_url().'verify-your-email/'.$email_ver_code_one.'/'.$user_id.'/'.$email_ver_code_two.'">Click here to verify your email</a>';
-
-$this->email->message('
-    Hello'.'<br>'.'<br>'.' 
+// $this->email->message('
+//     Hello'.'<br>'.'<br>'.' 
     
-    Welcome to '.$site_name.'. Please click on the link below to verify your email address.'
+//     Welcome to '.$site_name.'. Please click on the link below to verify your email address.'
 
-    .'<br><br>'.$message.'<br><br>'.'
+//     .'<br><br>'.$message.'<br><br>'.'
     
-    This link will verify your email address, and then you’ll officially be a part of our community.
-    <br>
-    <br>
-    See you there!
-    <br>
-    <br>
-    Best regards, the '.$site_name.' team');
+//     This link will verify your email address, and then you’ll officially be a part of our community.
+//     <br>
+//     <br>
+//     See you there!
+//     <br>
+//     <br>
+//     Best regards, the '.$site_name.' team');
 
-    if(!$this->email->send()) {
-        echo '<script>alert("Email not sent");</script>';
-        echo 'Mailer Error: ' . $this->email->print_debugger();
-    }else{
-        $result = array();
-        $official_email = '';
-        $password = '';
-        $host = '';
-        $port = '';
-        $message = 'Email has been sent';
-        return $message;
-    }
+//     if(!$this->email->send()) {
+//         echo '<script>alert("Email not sent");</script>';
+//         echo 'Mailer Error: ' . $this->email->print_debugger();
+//     }else{
+//         $result = array();
+//         $official_email = '';
+//         $password = '';
+//         $host = '';
+//         $port = '';
+//         $message = 'Email has been sent';
+//         return $message;
+//     }
+
+
+
+
+// access checker
+// redirect to home if no access
+echo $user_id = $this->session->userdata['user_id'];
+echo $page_name = $this->uri->segment(1);
+
+$user_details = $this->db->where('user_id',$user_id)->get('users')->result_array()[0];
+var_dump($user_details);
+
+$email_verified = $user_details['email_verified'];
+$phone_no_verified = $user_details['phone_no_verified'];
+$unique_id = $user_details['unique_id'];
+$user_active = $user_details['user_active']; 
+$level_1 = $user_details['level_1'];
+$level_2 = $user_details['level_2'];
+$level_3 = $user_details['level_3'];
+$level_4 = $user_details['level_4'];
+$level_5 = $user_details['level_5'];
+$level_6 = $user_details['level_6'];
+
+
+
+
+
 
 
 

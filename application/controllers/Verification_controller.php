@@ -25,6 +25,35 @@ $this->verification_model->send_verification_email_fm($email,$official_email_sl_
 
 }
 // ------------------------------------------
+public function please_verify_your_email_fc(){
+    if(!$this->session->userdata('logged_in')){redirect('login');}
+    $user_id = $this->session->userdata('user_id');
+    $table_name = 'users';
+	$known_value = $user_id;
+	$col_name_of_known_value = 'user_id';
+	
+	$col_name_of_op_value = 'email';
+	$data['email'] = $this->get_model->get_any_field_fm($table_name,$known_value,$col_name_of_known_value,$col_name_of_op_value);
+    $data['user_id'] = $user_id;
+    $this->load->view('templates/head/header');
+    $this->load->view('register/please_verify_your_email',$data);
+    $this->load->view('templates/foot/footer'); 
+}
+// ------------------------------------------
+public function resend_verification_email_fc($user_id){
+    $this->db->where('user_id',$user_id);
+    $result = $this->db->get('users')->result_array()[0];
+    // var_dump($result);
+    $email_ver_code_one = $result['email_ver_code_one'];
+    $email_ver_code_two = $result['email_ver_code_two'];
+    $email = $result['email'];
+    $official_email_sl_no = 1;
+    $this->verification_model->send_verification_email_fm($email,$official_email_sl_no,$email_ver_code_one,$email_ver_code_two,$user_id);
+    $this->session->set_flashdata('success','Verificaton email has been resend');
+    redirect('please-verify-your-email');
+}
+// ------------------------------------------
+
 public function verify_your_email_fc($email_ver_code_one,$user_id,$email_ver_code_two){
     $array = array(
         'user_id' => $user_id,

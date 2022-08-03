@@ -11,10 +11,16 @@ class Welcome extends CI_Controller {
 public function home_fc(){
 	// var_dump($this->session->userdata());
 	if($this->session->userdata('logged_in') != '1'){redirect('login');}
+
 	$user_id = $this->session->userdata('user_id');
 	$table_name = 'users';
 	$known_value = $user_id;
 	$col_name_of_known_value = 'user_id';
+	
+	$col_name_of_op_value = 'email_verified';
+	$email_verified = $this->get_model->get_any_field_fm($table_name,$known_value,$col_name_of_known_value,$col_name_of_op_value);
+	if($email_verified != '1'){redirect('please-verify-your-email');}
+
 	$col_name_of_op_value = 'level_2';
 	$level_2 = $this->get_model->get_any_field_fm($table_name,$known_value,$col_name_of_known_value,$col_name_of_op_value);
 	if($level_2 != '1'){redirect('search-by-place');}
@@ -31,6 +37,16 @@ public function home_fc(){
 	$level_5 = $this->get_model->get_any_field_fm($table_name,$known_value,$col_name_of_known_value,$col_name_of_op_value);
 	if(!$level_5){redirect('family-details');}
 
+	$col_name_of_op_value = 'level_6';
+	$level_6 = $this->get_model->get_any_field_fm($table_name,$known_value,$col_name_of_known_value,$col_name_of_op_value);
+	if(!$level_6){redirect('add-height');}
+
+	$col_name_of_op_value = 'level_7';
+	$level_7 = $this->get_model->get_any_field_fm($table_name,$known_value,$col_name_of_known_value,$col_name_of_op_value);
+	if(!$level_7){redirect('image-uploader');}
+
+
+	
 	$this->load->view('templates/head/header');
 	$this->load->view('home/home');
 	$this->load->view('templates/foot/footer');
@@ -177,10 +193,19 @@ public function login_fc(){
         $result = $this->db->get('users')->result_array();
         $user_id = $result[0]['user_id'];
 		$unique_id = $result[0]['unique_id'];
+		$email_verified = $result[0]['email_verified'];
+
 		$this->session->set_userdata('logged_in','1');
 		$this->session->set_userdata('user_id',$user_id);
 		$this->session->set_userdata('unique_id',$unique_id);
+		$this->session->set_userdata('email_verified',$email_verified);
 		$this->session->set_userdata('level_1',$result[0]['level_1']);
+		$this->session->set_userdata('level_2',$result[0]['level_2']);
+		$this->session->set_userdata('level_3',$result[0]['level_3']);
+		$this->session->set_userdata('level_4',$result[0]['level_4']);
+		$this->session->set_userdata('level_5',$result[0]['level_5']);
+		$this->session->set_userdata('level_6',$result[0]['level_6']);
+		$this->session->set_userdata('level_7',$result[0]['level_7']);
 
 		$this->session->set_flashdata('success','Login Successfull');
 		redirect('home');
@@ -212,98 +237,18 @@ public function check_email_registered_fc($email){
 public function logout_fc(){
 	$this->session->sess_destroy();
 	// var_dump($this->session->userdata());
+	redirect('');
 }
 // ------------------------------------------
 
 // ------------------------------------------
 // ------------------------------------------
-public function enter_pincode_fc(){
-	if($this->session->userdata('logged_in') != '1'){redirect('login');}
-	if($this->session->userdata('level_2') != '0'){redirect('home');}
-
-	$this->form_validation->set_rules('pincode','Pincode','required|callback_does_pincode_exists_fc');
-	if(!$this->form_validation->run()){
-
-	$this->load->view('templates/head/header');
-	$this->load->view('register/enter_pincode');
-	$this->load->view('templates/foot/footer');
-	}else{
-		$pincode = $this->input->post('pincode');
-		$value = $this->input->post('pincode');
-	$value_col_name = 'pincode';
-	$table_name = 'pincode_list';
-
-	$present = $this->get_model->check_a_value_present_fm($value,$value_col_name,$table_name);
-	if(!$present){
-		$this->form_validation->set_message('does_pincode_exists_fc','Enter a valid pincode');
-		return false;
-	}else{
-		// return true;
-		redirect('add-address/'.$pincode);
-	}
-	}
-}
-// ------------------------------------------
-public function add_address_fc($pincode){
-	if($this->session->userdata('logged_in') != '1'){redirect('login');}
-
-	$this->form_validation->set_rules('address_line_1','Address Line 1','required');
-	if(!$this->form_validation->run()){
-		$this->db->where('pincode',$pincode);
-		$select_array = array('officename_only','pincode','divisionname','Taluk','Districtname','statename');
-		$this->db->select($select_array);
-		$this->db->from('all_india_po_list');
-		$query = $this->db->get();
-		$data['po_list'] = $po_list = $query->result_array();
-		$data['num_rows'] = $query->num_rows();
-		$data['pincode'] = $pincode;
-		$this->load->view('templates/head/header');
-		$this->load->view('register/add_address',$data);
-		$this->load->view('templates/foot/footer');
-// var_dump($po_list);
-
-	}else{
-		$address_line_1 = $this->input->post('address_line_1');
-		$landmark = $this->input->post('landmark');
-		$pincode = $this->input->post('pincode');
-		$city = $this->input->post('city');
-		$district = $this->input->post('district');
-		$state = $this->input->post('state');
-		$country = $this->input->post('country');
-
-			$data = array(
-				'address_line_1' => $address_line_1, 
-				'landmark' => $landmark,
-				'pincode' => $pincode, 
-				'city' => $city, 
-				'district' => $district, 
-				'state' => $state, 
-				'country' => $country, 
-				'level_2' => '1',
-			);
-		$unique_id = $this->session->userdata('user_id');
-		$unique_id_col_name = 'user_id';
-		$table_name = 'users';
-		$this->update_model->update_fm($unique_id,$unique_id_col_name,$table_name,$data);
-	}
-}
-// ------------------------------------------
-public function does_pincode_exists_fc(){
-	$value = $this->input->post('pincode');
-	$value_col_name = 'pincode';
-	$table_name = 'pincode_list';
-
-	$present = $this->get_model->check_a_value_present_fm($value,$value_col_name,$table_name);
-	if(!$present){
-		$this->form_validation->set_message('does_pincode_exists_fc','Enter a valid pincode');
-		return false;
-	}else{
-		return true;
-	}
-}
 // ------------------------------------------
 public function community_details_fc(){
-	if($this->session->userdata('logged_in') != '1'){redirect('login');}
+	// if($this->session->userdata('logged_in') != '1'){redirect('login');}
+	// if($this->session->userdata('level_3') == '1'){redirect('home');}
+	$this->check_access_model->check_reg_page_access_fm();
+
 
 		
 	$query = $this->db->get('relegion_list');
@@ -328,6 +273,9 @@ public function community_details_fc(){
 // ------------------------------------------
 public function caste_selected(){
 	if($this->session->userdata('logged_in') != '1'){redirect('login');}
+	if($this->session->userdata('level_3') == '1'){redirect('home');}
+	$this->check_access_model->check_reg_page_access_fm();
+
 	$language = $this->input->post('language');
 	$relegion = $this->input->post('relegion');
 	// $this->session->set_userdata('temp_rel',$relegion);
@@ -341,6 +289,10 @@ public function caste_selected(){
 // ------------------------------------------
 public function community_details_language_relegion_caste_fc($language,$relegion,$caste){
 	if($this->session->userdata('logged_in') != '1'){redirect('login');}
+	if($this->session->userdata('level_3') == '1'){redirect('home');}
+	$this->check_access_model->check_reg_page_access_fm();
+
+	
 
 	$this->session->set_userdata('temp_lan',$language);
 	$this->session->set_userdata('temp_rel',$relegion);
@@ -373,6 +325,8 @@ public function community_details_language_relegion_caste_fc($language,$relegion
 // ------------------------------------------
 public function sub_caste_selected(){
 	if($this->session->userdata('logged_in') != '1'){redirect('login');}
+	if($this->session->userdata('level_3') == '1'){redirect('home');}
+	$this->check_access_model->check_reg_page_access_fm();
 
 	$language = $this->session->userdata('temp_lan');
 	$relegion = $this->session->userdata('temp_rel');
@@ -386,6 +340,9 @@ public function sub_caste_selected(){
 // ------------------------------------------
 public function community_details_language_relegion_caste_subcaste_fc($language,$relegion,$caste,$sub_caste){
 	if($this->session->userdata('logged_in') != '1'){redirect('login');}
+	if($this->session->userdata('level_3') == '1'){redirect('home');}
+	$this->check_access_model->check_reg_page_access_fm();
+
 	// $query = $this->db->get('caste_id');
 	// $result = $query->result_array();
 	// $data['caste_id_table'] = $result;
@@ -443,6 +400,8 @@ public function go_back_to_community(){
 // ------------------------------------------
 public function family_details_fc(){
 	if($this->session->userdata('logged_in') != '1'){redirect('login');}
+	if($this->session->userdata('level_5') == '1'){redirect('home');}
+	$this->check_access_model->check_reg_page_access_fm();
 
 	$data['family_class_list'] = $this->db->get('family_class')->result_array();
 
@@ -469,12 +428,15 @@ public function family_details_fc(){
 }
 // ------------------------------------------
 public function height_calculator_fc(){
-	if($this->session->userdata('logged_in') != '1'){redirect('login');}
+	// add-height
+	$this->check_access_model->check_reg_page_access_fm();
 
 	$this->form_validation->set_rules('height_in_cm','','required');
+	$data_to_view['current_value'] = $this->db->get('users')->row_array()['height_cm'];
+
 	if(!$this->form_validation->run()){
 	$this->load->view('templates/head/header');
-    $this->load->view('register/height_details');
+    $this->load->view('register/height_details',$data_to_view);
     $this->load->view('templates/foot/footer');
 	}else{
 		// height in cm
@@ -501,7 +463,12 @@ public function height_calculator_fc(){
 		$user_id = $this->session->userdata('user_id');
 		$this->db->where('user_id',$user_id);
 		$this->db->update('users',$data);
+		if(!is_null($data_to_view['current_value'])){
+
+			redirect('your-profile/#height');
+	}else{
 		redirect('home');
+	}
 	}
 }
 // ------------------------------------------

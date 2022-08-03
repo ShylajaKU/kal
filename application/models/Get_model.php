@@ -17,6 +17,13 @@ return $result = $query->result_array();
 }
 
 // ---------------------------------------
+public function get_rows_with_a_common_value_ordered_fm($known_value,$col_name_of_known_value,$table_name,$order_by,$asc_desc){
+    $this->db->where($col_name_of_known_value , $known_value);
+    $this->db->order_by($order_by,$asc_desc);
+    $query = $this->db->get($table_name);
+    return $result = $query->result_array();
+    }
+// ---------------------------------------
 // Function to get the client IP address
 public function get_client_ip() {
     $ipaddress = '';

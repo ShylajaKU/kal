@@ -31,10 +31,8 @@ public function image_upload_fc(){
         $this->load->library('upload', $config);
 
         if (!$this->upload->do_upload('userfile')){
-            $data['message'] = $this->upload->display_errors();
-            $this->load->view('templates/head/header');
-            $this->load->view('image/upload_status',$data);
-            $this->load->view('templates/foot/footer'); 
+            $this->session->set_flashdata('error','An error occured while uploading please try again');
+            redirect('upload-status');
         }else{
             // $visibility = 1;
 
@@ -54,13 +52,17 @@ public function image_upload_fc(){
             );
                 $data2 = $this->upload->data();
                 $data = array_merge($data1,$data2);
-                var_dump($data);
-                var_dump($data2);
+                // var_dump($data);
+                // var_dump($data2);
 
                 // $this->db->insert('user_images',$data_all);
                 $table_name = 'user_images';
                 $insert_id = $this->image_model->insert_data_fm($table_name,$data);
-
+                $data_level_7_in_users_table = array(
+                    'level_7' => 1,
+                );
+                $this->db->where('user_id',$user_id)->update('users',$data_level_7_in_users_table);
+                $this->session->set_userdata('level_7','1');
 
                 $imagePath = './uploads/user_images/'.$user_id.'/'.$data['file_name'];
                 $raw_name = $data['raw_name'];
@@ -75,9 +77,21 @@ public function image_upload_fc(){
 
                   $data = $this->webp_model->convert_to_webp_fm($imagePath,$compression_quality,$newImagePath);
 
+            $this->session->set_flashdata('success','Your photo has been uploaded successfully');
+            redirect('upload-status');
 
         }
     }
+}
+// ------------------------------------------
+public function image_upload_status_fc(){
+    if(!$this->session->userdata('logged_in')){redirect('login');}
+    $verified = $this->verification_model->verify_user_fm();
+    if(!$verified){redirect('login');}
+
+    $this->load->view('templates/head/header');
+    $this->load->view('image/upload_status');
+    $this->load->view('templates/foot/footer'); 
 }
 // ------------------------------------------
 public function view_your_images_fc(){
@@ -89,7 +103,12 @@ public function view_your_images_fc(){
     $known_value = $user_id;
     $col_name_of_known_value = 'user_id';
     $table_name = 'user_images';
-    $all_user_images = $this->get_model->get_rows_with_a_common_value_fm($known_value,$col_name_of_known_value,$table_name);
+    $order_by = 'profile_photo';
+    $asc_desc = 'desc';
+    $all_user_images = $this->get_model->get_rows_with_a_common_value_ordered_fm($known_value,$col_name_of_known_value,$table_name,$order_by,$asc_desc);
+
+
+
     $table_name = 'users';
     $col_name_of_op_value = 'name';
     $name = $this->get_model->get_any_field_fm($table_name,$known_value,$col_name_of_known_value,$col_name_of_op_value);
@@ -103,8 +122,74 @@ public function view_your_images_fc(){
 
 }
 // ------------------------------------------
+public function set_profile_photo_fc($image_id){
+    if(!$this->session->userdata('logged_in')){redirect('login');}
+    $verified = $this->verification_model->verify_user_fm();
+    if(!$verified){redirect('login');}
+
+    $table_name = 'user_images';
+    $known_value = $image_id;
+    $col_name_of_known_value = 'image_id';
+    $col_name_of_op_value = 'user_id';
+    $user_id_from_user_images = $this->get_model->get_any_field_fm($table_name,$known_value,$col_name_of_known_value,$col_name_of_op_value);
+
+    $user_id = $this->session->userdata('user_id');
+    
+    if($user_id != $user_id_from_user_images){
+        $this->session->set_flashdata('error','An error occured, Please try again later');
+        redirect('your-photos');
+    }else{
+        echo 'hi';
+    $this->db->where('user_id',$user_id);
+    $data = array(
+        'profile_photo' => 0,
+    );
+    $this->db->update('user_images',$data);
+
+    $this->db->where('image_id',$image_id);
+    $data = array(
+        'profile_photo' => 1,
+    );
+    $this->db->update('user_images',$data);
+    // var_dump($this->db->get('user_images')->result_array());
+    $this->session->set_flashdata('success','Profile Photo changed');
+    redirect('your-photos');
+    }
+}
 
 // ------------------------------------------
+public function delete_an_image_fc($image_id){
+    if(!$this->session->userdata('logged_in')){redirect('login');}
+    $verified = $this->verification_model->verify_user_fm();
+    if(!$verified){redirect('login');}
+
+    $table_name = 'user_images';
+    $known_value = $image_id;
+    $col_name_of_known_value = 'image_id';
+    $col_name_of_op_value = 'user_id';
+    $user_id_from_user_images = $this->get_model->get_any_field_fm($table_name,$known_value,$col_name_of_known_value,$col_name_of_op_value);
+
+    $user_id = $this->session->userdata('user_id');
+    
+    if($user_id != $user_id_from_user_images){
+        $this->session->set_flashdata('error','An error occured, Please try again later');
+        redirect('your-photos');
+    }else{
+        $col_name_of_op_value = 'upload_path';
+        $upload_path = $this->get_model->get_any_field_fm($table_name,$known_value,$col_name_of_known_value,$col_name_of_op_value);
+        $col_name_of_op_value = 'raw_name';
+        $raw_name = $this->get_model->get_any_field_fm($table_name,$known_value,$col_name_of_known_value,$col_name_of_op_value);
+        $col_name_of_op_value = 'file_ext';
+        $file_ext = $this->get_model->get_any_field_fm($table_name,$known_value,$col_name_of_known_value,$col_name_of_op_value);
+
+        unlink($upload_path.$raw_name.$file_ext);
+        unlink($upload_path.$raw_name.'.webp');
+        $this->db->where('image_id',$image_id);
+        $this->db->delete('user_images');
+        $this->session->set_flashdata('success','Your photo has been deleted');
+        redirect('your-photos');
+    }
+}
 // ------------------------------------------
 // ------------------------------------------
 // ------------------------------------------

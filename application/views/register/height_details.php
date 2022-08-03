@@ -12,8 +12,7 @@
 
     <?= form_open() ?>
     <label class="form-label" for="mt">Height in cm *</label>
-    <input class="form-control" type="number" name="height_in_cm" required>
-
+    <input class="form-control" type="number" name="height_in_cm" required value="<?=$current_value?>">
 <br>
 <button type="submit" class="btn btn-primary">Save</button>
 <br><br>

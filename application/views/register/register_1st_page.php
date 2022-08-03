@@ -100,7 +100,7 @@
 
     <!-- ------------------------------------- -->
     <label for="" class="form-label">Email ID *</label>
-    <input class="form-control" id="email" type="text" name="email" placeholder="Email" value="<?php if($this->session->userdata('email') != 'null'){echo $this->session->userdata('email');} ?>">
+    <input class="form-control" id="email" type="email" name="email" placeholder="Email" value="<?php if($this->session->userdata('email') != 'null'){echo $this->session->userdata('email');} ?>">
 <br>
 <span style="color: red;"><?= form_error('email'); ?></span>
 

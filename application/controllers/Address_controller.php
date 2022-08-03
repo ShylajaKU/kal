@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Address_controller extends CI_Controller {
 // ------------------------------------------
 public function search_by_place_fc(){
+    
     $table_name = 'state_id';
     $select = array('state_id','statename','statename_slug');
     $state_names = $this->address_model->get_selected_data_fm($table_name,$select);

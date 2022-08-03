@@ -14,7 +14,8 @@ $tb1 = array_merge($tb1 , $address_into_array);
 
 <div class="container vip-container">
 
-
+<h2>Profile</h2>
+<br>
 <!-- ======================================= -->
     <label class="">Email
         <?php if($tb1['email_verified']){echo ' - Verified';}else{echo ' - Verification pending';} ?>
@@ -47,22 +48,25 @@ $tb1 = array_merge($tb1 , $address_into_array);
   </div> -->
 </div>
 <!-- ======================================= -->
-<label class="form-label">Mothers Name</label>
+<label class="form-label" id="mothers_name">Mothers Name</label>
     
 <div class="input-group mb-3">
   <input readonly type="text" class="form-control" value="<?= $tb1['mothers_name'] ?>" aria-describedby="basic-addon2">
-  <div class="input-group-append">
+  <!-- <div class="input-group-append">
     <a class="btn btn-outline-secondary" href="<?= base_url('family-details')?>">Edit</a>
-  </div>
+  </div> -->
+  <!-- <div class="input-group-append">
+    <a class="btn btn-outline-secondary" href="<?= base_url('edit-profile/mothers_name')?>">Edit</a>
+  </div> -->
 </div>
 <!-- ======================================= -->
 
-<label class="form-label">Fathers Name</label>
+<label class="form-label" id="fathers_name">Fathers Name</label>
 <div class="input-group mb-3">
   <input readonly type="text" class="form-control" value="<?= $tb1['fathers_name'] ?>" aria-describedby="basic-addon2">
-  <div class="input-group-append">
-    <a class="btn btn-outline-secondary" href="<?= base_url('family-details')?>">Edit</a>
-  </div>
+  <!-- <div class="input-group-append">
+    <a class="btn btn-outline-secondary" href="<?= base_url('edit-profile/fathers_name')?>">Edit</a>
+  </div> -->
 </div>
 <!-- ======================================= -->
 <label class="form-label">Name</label>
@@ -82,11 +86,11 @@ $tb1 = array_merge($tb1 , $address_into_array);
   </div> -->
 </div>
 <!-- ======================================= -->
-<label class="form-label">Date of Birth</label>
+<label class="form-label" id="dob">Date of Birth</label>
 <div class="input-group mb-3">
   <input readonly type="date" class="form-control" value="<?= $tb1['dob']; ?>" aria-describedby="basic-addon2">
   <!-- <div class="input-group-append">
-    <button class="btn btn-outline-secondary" type="button">Button</button>
+    <a class="btn btn-outline-secondary" href="<?= base_url('edit-profile/dob')?>">Change</a>
   </div> -->
 </div>
 <!-- ======================================= -->
@@ -119,7 +123,7 @@ $age = ageCalculator($dob);
   </div> -->
 </div>
 <!-- ======================================= -->
-<label class="form-label">Height</label>
+<label class="form-label" id="height">Height</label>
 <div class="input-group mb-3">
   <input readonly type="text" class="form-control" value="<?= $tb1['height_cm'] ?> cm" aria-describedby="basic-addon2">
   <div class="input-group-append">
@@ -143,20 +147,20 @@ $age = ageCalculator($dob);
   </div>
 </div>
 <!-- ======================================= -->
-<label class="form-label">Family Class</label>
+<label class="form-label" id="family_class">Family Class</label>
 <div class="input-group mb-3">
   <input readonly type="text" class="form-control" value="<?= $tb1['family_class'] ?>" aria-describedby="basic-addon2">
   <div class="input-group-append">
-    <a class="btn btn-outline-secondary" href="<?= base_url('family-details')?>">Change</a>
+    <a class="btn btn-outline-secondary" href="<?= base_url('edit-profile/family_class')?>">Change</a>
   </div>
 </div>
 <!-- ======================================= -->
 <label class="form-label">Mother Tounge</label>
 <div class="input-group mb-3">
   <input readonly type="text" class="form-control" value="<?= $tb1['mother_tounge'] ?>" aria-describedby="basic-addon2">
-  <div class="input-group-append">
+  <!-- <div class="input-group-append">
     <a class="btn btn-outline-secondary" href="<?= base_url('community-details')?>">Change</a>
-  </div>
+  </div> -->
 </div>
 <!-- ======================================= -->
 <label class="form-label">Education</label>
@@ -188,9 +192,9 @@ $age = ageCalculator($dob);
 <label class="form-label">Relegion</label>
 <div class="input-group mb-3">
   <input readonly type="text" class="form-control" value="<?= $tb1['relegion'] ?>" aria-describedby="basic-addon2">
-  <div class="input-group-append">
+  <!-- <div class="input-group-append">
     <a class="btn btn-outline-secondary" href="<?= base_url('community-details')?>">Change</a>
-  </div>
+  </div> -->
 </div>
 <!-- ======================================= -->
 <label class="form-label">Caste</label>

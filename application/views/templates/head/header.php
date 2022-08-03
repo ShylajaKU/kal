@@ -60,6 +60,13 @@ $site_name = 'k4kalyanam.in';
           <a class="nav-link active" href="<?= base_url('login')?>">Login</a>
         </li>
       <?php }else{ ?>
+        <li class="nav-item">
+          <a class="nav-link active" href="<?= base_url('your-profile')?>">Profile</a>
+        </li>
+          <li class="nav-item">
+          <a class="nav-link active" href="<?= base_url('your-photos')?>">Photo gallery</a>
+          </li>
+
           <li class="nav-item">
           <a class="nav-link active" href="<?= base_url('logout')?>">Logout</a>
         </li>

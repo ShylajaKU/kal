@@ -56,6 +56,8 @@ $route['register'] = 'welcome/register_1st_page';
 // send email verification link
 $route['send-email-verification-code/(:any)/(:any)'] = 'verification_controller/send_email_verication_link_fc/$1/$2';
 $route['verify-your-email/(:any)/(:num)/(:any)'] = 'verification_controller/verify_your_email_fc/$1/$2/$3';
+$route['please-verify-your-email'] = 'verification_controller/please_verify_your_email_fc';
+$route['resend-verification-email/(:any)'] = 'verification_controller/resend_verification_email_fc/$1';
 // send email verification link
 
 
@@ -109,6 +111,7 @@ $route['add-height'] = 'welcome/height_calculator_fc';
 
 // upload image
 $route['image-uploader'] = 'image_controller/image_upload_fc';
+$route['upload-status'] = 'image_controller/image_upload_status_fc';
 // upload image
 
 // policies
@@ -118,12 +121,14 @@ $route['terms-and-conditions'] = 'welcome/terms_and_conditions_fc';
 
 // your profile
 $route['your-profile'] = 'user_controller/your_profile_fc';
+$route['edit-profile/(:any)'] = 'user_controller/edit_profile_item_fc/$1';
 // your profile
 
 // view your images
 $route['your-photos'] = 'image_controller/view_your_images_fc';
 // view your images
-
+$route['set-as-profile-photo/(:num)'] = 'image_controller/set_profile_photo_fc/$1';
+$route['delete-image/(:num)'] = 'image_controller/delete_an_image_fc/$1';
 
 // plan
 // $route['view-your-plan'] = 'plan_controller/view_your_plan_fc';

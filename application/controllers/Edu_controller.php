@@ -5,6 +5,7 @@ class Edu_controller extends CI_Controller {
 // ------------------------------------------
 public function education_and_job_fc(){
 	if($this->session->userdata('logged_in') != '1'){redirect('login');}
+	// if($this->session->userdata('level_4') == '1'){redirect('home');}
 
     $this->db->where('approved','1');
     $query = $this->db->get('highest_education');
@@ -20,6 +21,9 @@ public function education_and_job_fc(){
     $query = $this->db->get('annual_income');
     $result = $query->result_array();
     $data['annual_income_list'] = $result;
+
+	// $data_to_view['current_value'] = $this->db->get('users')->row_array()['height_cm'];
+
 
     $this->form_validation->set_rules('highest_education','Highest Education','required' );
     if(!$this->form_validation->run()){
