@@ -32,13 +32,10 @@ foreach($matches as $match){
     $file_ext = $match['file_ext'];
     $og_file = $upload_path.$raw_name.$file_ext;
     $webp_file = $upload_path.$raw_name.'.webp';
-    // $profile_photo = $match['profile_photo'];
-    // $image_id = $match['image_id'];
-    $name = $match['name'];
     // caste is checked in the search_model
+    $name = $match['name'];
     $dob = $match['dob'];
     $age = $this->verification_model->age_calculator($dob);
-    // $loc = $match['city'].','.$match['district'].','.$match['state'].','.$match['country'];
     $loc = $match['district'].','.$match['state'].','.$match['country'];
     $edu = $match['education'];
     $occupation = $match['occupation'];
@@ -57,7 +54,7 @@ foreach($matches as $match){
               <h5 class="text-dark"><?= $name ?></h5>
               <p>Education : <?= $edu ?></p>
               <p>Occupation : <?= $occupation ?></p>
-              <p>Location : <?= $loc ?></p>
+              <p>Locatlity : <?= $loc ?></p>
               <p>Age / Height : <?= $age .' yrs , '.$height_cm.' cm / '.$height_feet_inch  ?></p>
       <div class="d-flex align-items-center justify-content-between rounded-pill bg-light px-3 py-2 mt-4">
             
