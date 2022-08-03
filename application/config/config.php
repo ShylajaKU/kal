@@ -34,7 +34,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 if($_SERVER['SERVER_ADDR'] == '::1'){
     $config['base_url'] = 'http://localhost/kal';
 }else{
-    $config['base_url'] = 'https://k4kalyanam.in';
+    $config['base_url'] = 'https://kforkalyanam.in';
 }
     
 /*

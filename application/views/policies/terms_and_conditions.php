@@ -1,6 +1,6 @@
 <?php
-$site_name = 'k4kalyanam.in';
-$full_url = 'https://www.k4kalyanam.in';
+$site_name = 'kforkalyanam.in';
+$full_url = 'https://www.kforkalyanam.in';
 $email = '';
 ?>
 
