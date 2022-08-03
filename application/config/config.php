@@ -47,8 +47,8 @@ if($_SERVER['SERVER_ADDR'] == '::1'){
 | variable so that it is blank.
 |
 */
-// $config['index_page'] = 'index.php';
-$config['index_page'] = '';
+$config['index_page'] = 'index.php';
+// $config['index_page'] = '';
 
 /*
 |--------------------------------------------------------------------------
