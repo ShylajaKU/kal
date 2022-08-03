@@ -45,10 +45,9 @@ public function home_fc(){
 	$level_7 = $this->get_model->get_any_field_fm($table_name,$known_value,$col_name_of_known_value,$col_name_of_op_value);
 	if(!$level_7){redirect('image-uploader');}
 
-
-	
+	$data['matches'] = $this->search_model->home_page_results_fm();
 	$this->load->view('templates/head/header');
-	$this->load->view('home/home');
+	$this->load->view('home/home',$data);
 	$this->load->view('templates/foot/footer');
 
 }
@@ -429,10 +428,11 @@ public function family_details_fc(){
 // ------------------------------------------
 public function height_calculator_fc(){
 	// add-height
+	if($this->session->userdata('logged_in') != '1'){redirect('login');}
 	$this->check_access_model->check_reg_page_access_fm();
-
+	$user_id = $this->session->userdata('user_id');
 	$this->form_validation->set_rules('height_in_cm','','required');
-	$data_to_view['current_value'] = $this->db->get('users')->row_array()['height_cm'];
+	$data_to_view['current_value'] = $this->db->where('user_id',$user_id)->get('users')->row_array()['height_cm'];
 
 	if(!$this->form_validation->run()){
 	$this->load->view('templates/head/header');
@@ -447,7 +447,7 @@ public function height_calculator_fc(){
 		$whole = floor($height_in_feet);
 		$decimal = $height_in_feet - $whole ;
 		$inch = floor($decimal * 12) ;
-		echo $string = $whole.'\' '.$inch.'"';
+		$string = $whole.' ft '.$inch.' in';
 		// 1 feet = 12 inches
 		// $whole feet #inch inch
 

@@ -27,6 +27,7 @@ $this->verification_model->send_verification_email_fm($email,$official_email_sl_
 // ------------------------------------------
 public function please_verify_your_email_fc(){
     if(!$this->session->userdata('logged_in')){redirect('login');}
+    if($this->session->userdata('email_verified')){redirect('home');}
     $user_id = $this->session->userdata('user_id');
     $table_name = 'users';
 	$known_value = $user_id;

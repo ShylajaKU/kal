@@ -122,6 +122,25 @@ public function verify_user_fm(){
     }
 }
 // ---------------------------------------
+/**
+ * Simple PHP age Calculator
+ * 
+ * Calculate and returns age based on the date provided by the user.
+ * @param   date of birth('Format:yyyy-mm-dd').
+ * @return  age based on date of birth
+ */
+public function age_calculator($dob){
+    if(!empty($dob)){
+        $birthdate = new DateTime($dob);
+        $today   = new DateTime('today');
+        $age = $birthdate->diff($today)->y;
+        return $age;
+    }else{
+        return 0;
+    }
+}
+// $dob = $tb1['dob'];
+// $age = ageCalculator($dob);
 // ---------------------------------------
 // ---------------------------------------
 // ---------------------------------------
